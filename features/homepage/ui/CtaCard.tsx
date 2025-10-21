@@ -3,7 +3,7 @@ import React from "react";
 
 const CtaCard = () => {
   return (
-    <div className="mx-4 mt-8 flex flex-col gap-4">
+    <div className="mx-4 mt-10 flex flex-col gap-4">
       <div className="w-full">
         <Button className="w-full rounded-sm" radius="none" color="primary">
           Cek Status Pembayaran
