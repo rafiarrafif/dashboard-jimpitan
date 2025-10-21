@@ -1,7 +1,12 @@
+import Homepage from "@/features/homepage/page";
 import React from "react";
 
 const page = () => {
-  return <div>Hello World</div>;
+  return (
+    <div>
+      <Homepage />
+    </div>
+  );
 };
 
 export default page;
