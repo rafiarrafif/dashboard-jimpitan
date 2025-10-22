@@ -1,4 +1,4 @@
-import { Button } from "@heroui/react";
+import { Button, Link } from "@heroui/react";
 import React from "react";
 
 const CtaCard = () => {
@@ -6,9 +6,11 @@ const CtaCard = () => {
     <div className="mx-4 mt-10 flex flex-col gap-4">
       <div className="w-full">
         <Button
+          as={Link}
           className="w-full rounded-sm text-white h-14"
           radius="none"
           color="primary"
+          href="cek-iuran"
         >
           Cek Status Pembayaran
         </Button>
