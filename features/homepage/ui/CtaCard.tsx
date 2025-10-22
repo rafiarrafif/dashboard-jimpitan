@@ -5,7 +5,11 @@ const CtaCard = () => {
   return (
     <div className="mx-4 mt-10 flex flex-col gap-4">
       <div className="w-full">
-        <Button className="w-full rounded-sm" radius="none" color="primary">
+        <Button
+          className="w-full rounded-sm text-white h-14"
+          radius="none"
+          color="primary"
+        >
           Cek Status Pembayaran
         </Button>
         <p className="text-xs text-center mt-1 text-neutral-600">
@@ -15,9 +19,10 @@ const CtaCard = () => {
       </div>
       <div>
         <Button
-          className="w-full rounded-sm"
+          className="w-full rounded-sm h-12"
           radius="none"
           color="primary"
+          variant="bordered"
           isDisabled
         >
           Laporan Keuangan
