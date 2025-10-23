@@ -1,0 +1,92 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client"
+  output   = "../app/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Household {
+  id                String            @id @default(uuid()) @db.Uuid
+  householdName     String            @db.Char(255)
+  headOfHousehold   String            @db.Char(255)
+  householdPronoun  HouseholdPronouns
+  firstNeighbor     Household         @relation("FirstNeighbor", fields: [firstNeighborId], references: [id])
+  secondNeighbor    Household         @relation("SecondNeighbor", fields: [secondNeighborId], references: [id])
+  firstNeighborId   String            @db.Uuid
+  secondNeighborId  String            @db.Uuid
+  deletedAt         DateTime?
+  createdAt         DateTime          @default(now()) 
+  updatedAt         DateTime          @default(now()) @updatedAt
+
+  firstNeighborOf   Household[]       @relation("FirstNeighbor")
+  secondNeighborOf  Household[]       @relation("SecondNeighbor")
+  transactions      Transaction[]     @relation("householdTransactions")
+  paymentCoverages  PaymentCoverage[] @relation("householdPaymentCoverage")
+  collector         Collector[]       @relation("householdOfCollector")
+  @@map("households")
+}
+enum HouseholdPronouns {
+  mas
+  mbak
+  bapak
+  ibu
+  mbah
+}
+
+model Transaction {
+  id          String    @id @default(uuid()) @db.Uuid
+  household   Household @relation("householdTransactions", fields: [householdId], references: [id])
+  householdId String    @db.Uuid
+  amount      Float     @db.DoublePrecision
+  issuer      Collector @relation("transactionCollector", fields: [issuedBy], references: [id])
+  issuedBy    String    @db.Uuid
+  paidAt      DateTime
+  note        String?   @db.Text
+  deletedAt   DateTime?
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @default(now()) @updatedAt
+
+  paymentCoverages  PaymentCoverage[]   @relation("paymentCoverageTransaction")
+  @@map("transactions")
+}
+
+model PaymentCoverage {
+  id            String      @id @default(uuid()) @db.Uuid
+  transaction   Transaction @relation("paymentCoverageTransaction", fields: [transactionId], references: [id])
+  transactionId String      @db.Uuid
+  household     Household   @relation("householdPaymentCoverage", fields: [householdId], references: [id])
+  householdId   String      @db.Uuid
+  ammount       Float       @db.DoublePrecision @default(2000.00)
+  startDate     DateTime
+  endDate       DateTime
+  weekCode      String      @db.Char(10)
+  deletedAt     DateTime?
+  createdAt     DateTime    @default(now())
+  updatedAt     DateTime    @default(now()) @updatedAt
+  @@map("payment_coverages")
+}
+
+model Collector {
+  id String @id @default(uuid()) @db.Uuid
+  name String @db.Char(255)
+  phone String @db.Char(20)
+  email String @db.Char(255)
+  password String @db.Char(255)
+  household Household @relation("householdOfCollector", fields: [householdId], references: [id])
+  householdId String @db.Uuid
+  deletedAt DateTime?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @default(now()) @updatedAt
+
+  collections Transaction[] @relation("transactionCollector")
+  @@map("collectors")
+}
