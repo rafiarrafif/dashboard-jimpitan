@@ -1,21 +1,19 @@
-// "use client";
+"use client";
 
-// import React, { useEffect, useState } from "react";
-// import CekIuranNavbar from "../ui/Navbar";
-// import { getAllHousehold } from "../libs/getAllHousehold";
+import React, { Suspense } from "react";
+import CekIuranNavbar from "../ui/Navbar";
+import SelectHousehold from "../ui/SelectHousehold";
+import Loading from "../ui/Loading";
 
-// const CekIuran = () => {
-//   const [householdList, setHouseholdList] = useState()
-//   useEffect( () => async () => {
-//     const callback = await getAllHousehold() as any
-//     setHouseholdList(callback)
-//   }, [])
-//   return (
-//     <div>
-//       <CekIuranNavbar />
-//       <p>TETTT</p>
-//     </div>
-//   );
-// };
+const CekIuran = () => {
+  return (
+    <div>
+      <CekIuranNavbar />
+      <Suspense fallback={<Loading />}>
+        <SelectHousehold />
+      </Suspense>
+    </div>
+  );
+};
 
-// export default CekIuran;
+export default CekIuran;
