@@ -19,10 +19,10 @@ model Household {
   householdName     String            @db.Char(255)
   headOfHousehold   String            @db.Char(255)
   householdPronoun  HouseholdPronouns
-  firstNeighbor     Household         @relation("FirstNeighbor", fields: [firstNeighborId], references: [id])
-  secondNeighbor    Household         @relation("SecondNeighbor", fields: [secondNeighborId], references: [id])
-  firstNeighborId   String            @db.Uuid
-  secondNeighborId  String            @db.Uuid
+  firstNeighbor     Household?        @relation("FirstNeighbor", fields: [firstNeighborId], references: [id])
+  secondNeighbor    Household?        @relation("SecondNeighbor", fields: [secondNeighborId], references: [id])
+  firstNeighborId   String?           @db.Uuid
+  secondNeighborId  String?           @db.Uuid
   deletedAt         DateTime?
   createdAt         DateTime          @default(now()) 
   updatedAt         DateTime          @default(now()) @updatedAt
