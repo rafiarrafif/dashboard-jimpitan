@@ -12,18 +12,11 @@ const pronounOptions = [
   { value: "mbah", label: "Mbah" },
 ];
 
-const FormCreateHousehold = () => {
-  const [householdList, setHouseholdList] = useState<
-    HouseholdSimpleList[] | null
-  >(null);
-
-  useEffect(() => {
-    (async () => {
-      const callback = await getAllHousehold();
-      setHouseholdList(callback);
-    })();
-  }, []);
-
+const FormCreateHousehold = ({
+  householdList,
+}: {
+  householdList: HouseholdSimpleList[];
+}) => {
   return (
     <Form className="w-full px-4 mt-6">
       <div className="w-full flex flex-col gap-2">
@@ -57,7 +50,7 @@ const FormCreateHousehold = () => {
           )}
         </Select>
         <Select
-          items={pronounOptions}
+          items={householdList}
           label="Nama Tetangga 1 (Opsional)"
           variant="bordered"
           radius="none"
@@ -66,20 +59,20 @@ const FormCreateHousehold = () => {
             popoverContent: "rounded-sm",
           }}
         >
-          {(pronounOptions) => (
+          {(householdList) => (
             <SelectItem
-              key={pronounOptions.value}
+              key={householdList.id}
               classNames={{
                 base: "rounded-sm",
               }}
             >
-              {pronounOptions.label}
+              {householdList.householdName}
             </SelectItem>
           )}
         </Select>
         <Select
-          items={pronounOptions}
-          label="Nama Tetangga 2 (Opsional)"
+          items={householdList}
+          label="Nama Tetangga 1 (Opsional)"
           variant="bordered"
           radius="none"
           classNames={{
@@ -87,14 +80,14 @@ const FormCreateHousehold = () => {
             popoverContent: "rounded-sm",
           }}
         >
-          {(pronounOptions) => (
+          {(householdList) => (
             <SelectItem
-              key={pronounOptions.value}
+              key={householdList.id}
               classNames={{
                 base: "rounded-sm",
               }}
             >
-              {pronounOptions.label}
+              {householdList.householdName}
             </SelectItem>
           )}
         </Select>

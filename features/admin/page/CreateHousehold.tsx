@@ -23,7 +23,7 @@ const CreateHousehold = () => {
       {householdList ? (
         <div>
           <TitleCreateHousehold />
-          <FormCreateHousehold />
+          <FormCreateHousehold householdList={householdList} />
         </div>
       ) : (
         <LoadingScreen />
