@@ -1,6 +1,8 @@
 "use client";
+import { getAllHousehold } from "@/entities/household/model/getAllHousehold";
+import { HouseholdSimpleList } from "@/entities/household/types";
 import { Button, Form, Input, Select, SelectItem } from "@heroui/react";
-import React from "react";
+import React, { useEffect, useState } from "react";
 
 const pronounOptions = [
   { value: "pak", label: "Pak" },
@@ -11,6 +13,17 @@ const pronounOptions = [
 ];
 
 const FormCreateHousehold = () => {
+  const [householdList, setHouseholdList] = useState<
+    HouseholdSimpleList[] | null
+  >(null);
+
+  useEffect(() => {
+    (async () => {
+      const callback = await getAllHousehold();
+      setHouseholdList(callback);
+    })();
+  }, []);
+
   return (
     <Form className="w-full px-4 mt-6">
       <div className="w-full flex flex-col gap-2">

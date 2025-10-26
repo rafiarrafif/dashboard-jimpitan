@@ -1,14 +1,8 @@
 "use client";
 import { Select, SelectItem } from "@heroui/react";
-import React, { useState } from "react";
-import { getAllHousehold } from "../libs/getAllHousehold";
-
-interface HouseholdList {
-  id: number;
-  headOfHousehold: string;
-  address: string;
-  numberOfMembers: number;
-}
+import React from "react";
+import { getAllHousehold } from "../../../entities/household/model/getAllHousehold";
+import { HouseholdList } from "@/entities/household/types";
 
 let householdData: HouseholdList[] | null = null;
 let fetchPromise: Promise<void> | null = null;
