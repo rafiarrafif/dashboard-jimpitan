@@ -72,7 +72,7 @@ const FormCreateHousehold = ({
         </Select>
         <Select
           items={householdList}
-          label="Nama Tetangga 1 (Opsional)"
+          label="Nama Tetangga 2 (Opsional)"
           variant="bordered"
           radius="none"
           classNames={{
