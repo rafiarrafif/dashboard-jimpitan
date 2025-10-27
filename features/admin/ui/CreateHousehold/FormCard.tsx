@@ -79,6 +79,8 @@ const FormCreateHousehold = ({
             label="Nama Tetangga 1 (Opsional)"
             variant="bordered"
             radius="none"
+            isInvalid={errors.firstNeighborId ? true : false}
+            errorMessage={errors.firstNeighborId?.message as string}
             classNames={{
               trigger: "border-neutral-400 border-1 rounded-sm",
               popoverContent: "rounded-sm",
@@ -101,6 +103,8 @@ const FormCreateHousehold = ({
             label="Nama Tetangga 2 (Opsional)"
             variant="bordered"
             radius="none"
+            isInvalid={errors.secondNeighborId ? true : false}
+            errorMessage={errors.secondNeighborId?.message as string}
             classNames={{
               trigger: "border-neutral-400 border-1 rounded-sm",
               popoverContent: "rounded-sm",
