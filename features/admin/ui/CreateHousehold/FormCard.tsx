@@ -6,6 +6,8 @@ import {
 } from "@/entities/household/types";
 import { Button, Form, Input, Select, SelectItem } from "@heroui/react";
 import { FormProvider, SubmitHandler, useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { CreateNewHouseholdSchema } from "@/entities/household/validation/CreateNewHousehold";
 
 const pronounOptions = [
   { value: "pak", label: "Pak" },
@@ -20,8 +22,14 @@ const FormCreateHousehold = ({
 }: {
   householdList: HouseholdSimpleList[];
 }) => {
-  const formPayload = useForm<CreateHouseholdFormData>();
-  const { handleSubmit, register } = formPayload;
+  const formPayload = useForm<CreateHouseholdFormData>({
+    resolver: zodResolver(CreateNewHouseholdSchema),
+  });
+  const {
+    handleSubmit,
+    register,
+    formState: { errors },
+  } = formPayload;
 
   const sendFormData: SubmitHandler<CreateHouseholdFormData> = (data) =>
     console.log(data);
@@ -35,10 +43,11 @@ const FormCreateHousehold = ({
             label="Nama Perwakilan Keluarga"
             variant="bordered"
             radius="none"
+            isInvalid={errors.headOfHousehold ? true : false}
+            errorMessage={errors.headOfHousehold?.message as string}
             classNames={{
               inputWrapper: "border-neutral-400 border-1 rounded-sm",
             }}
-            required
           />
           <Select
             {...register("householdPronoun")}
@@ -46,11 +55,12 @@ const FormCreateHousehold = ({
             label="Sapaan"
             variant="bordered"
             radius="none"
+            isInvalid={errors.householdPronoun ? true : false}
+            errorMessage={errors.householdPronoun?.message as string}
             classNames={{
               trigger: "border-neutral-400 border-1 rounded-sm",
               popoverContent: "rounded-sm",
             }}
-            required
           >
             {(pronounOptions) => (
               <SelectItem
