@@ -16,6 +16,7 @@ import { FormProvider, SubmitHandler, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { CreateNewHouseholdSchema } from "@/entities/household/validation/CreateNewHousehold";
 import { insertNewHousehold } from "@/entities/household/model/insertNewHousehold";
+import { useRouter } from "next/navigation";
 
 const pronounOptions = [
   { value: "bapak", label: "Bapak" },
@@ -30,6 +31,7 @@ const FormCreateHousehold = ({
 }: {
   householdList: HouseholdSimpleList[];
 }) => {
+  const router = useRouter();
   const [submitLoading, setSubmitLoading] = useState(false);
 
   const formPayload = useForm<CreateHouseholdFormData>({
@@ -51,6 +53,7 @@ const FormCreateHousehold = ({
           description: callback.message.description,
           color: "success",
         });
+        setTimeout(() => router.push("/"), 3000);
       } else {
         addToast({
           title: "Terjadi masalah",
@@ -164,6 +167,7 @@ const FormCreateHousehold = ({
           color="primary"
           className="w-full rounded-sm text-white h-12 mt-2"
           radius="none"
+          isLoading={submitLoading}
         >
           Tambah
         </Button>
