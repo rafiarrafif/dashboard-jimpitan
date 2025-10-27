@@ -1,10 +1,17 @@
 "use client";
-import React from "react";
+import React, { useState } from "react";
 import {
   CreateHouseholdFormData,
   HouseholdSimpleList,
 } from "@/entities/household/types";
-import { Button, Form, Input, Select, SelectItem } from "@heroui/react";
+import {
+  addToast,
+  Button,
+  Form,
+  Input,
+  Select,
+  SelectItem,
+} from "@heroui/react";
 import { FormProvider, SubmitHandler, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { CreateNewHouseholdSchema } from "@/entities/household/validation/CreateNewHousehold";
@@ -23,6 +30,8 @@ const FormCreateHousehold = ({
 }: {
   householdList: HouseholdSimpleList[];
 }) => {
+  const [submitLoading, setSubmitLoading] = useState(false);
+
   const formPayload = useForm<CreateHouseholdFormData>({
     resolver: zodResolver(CreateNewHouseholdSchema),
   });
@@ -33,13 +42,31 @@ const FormCreateHousehold = ({
   } = formPayload;
 
   const sendFormData: SubmitHandler<CreateHouseholdFormData> = async (data) => {
-    const callback = await insertNewHousehold(data);
-    if (callback.success) {
-      console.log("Berhasil");
-      console.log(callback);
-    } else {
-      console.error("Gagal");
-      console.log(callback);
+    setSubmitLoading(true);
+    try {
+      const callback = await insertNewHousehold(data);
+      if (callback.success) {
+        addToast({
+          title: callback.message.title,
+          description: callback.message.description,
+          color: "success",
+        });
+      } else {
+        addToast({
+          title: "Terjadi masalah",
+          description: "Terjadi masalah saat ingin menambahkan data",
+          color: "danger",
+        });
+        setSubmitLoading(false);
+      }
+    } catch (error) {
+      console.log(error);
+      addToast({
+        title: "Koneksi ke server terputus",
+        description: "Pastikan koneksi anda tidak terganggu",
+        color: "danger",
+      });
+      setSubmitLoading(false);
     }
   };
 
