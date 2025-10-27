@@ -8,10 +8,11 @@ import { Button, Form, Input, Select, SelectItem } from "@heroui/react";
 import { FormProvider, SubmitHandler, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { CreateNewHouseholdSchema } from "@/entities/household/validation/CreateNewHousehold";
+import { insertNewHousehold } from "@/entities/household/model/insertNewHousehold";
 
 const pronounOptions = [
-  { value: "pak", label: "Pak" },
-  { value: "bu", label: "Bu" },
+  { value: "bapak", label: "Bapak" },
+  { value: "ibu", label: "Ibu" },
   { value: "mas", label: "Mas" },
   { value: "mbak", label: "Mbak" },
   { value: "mbah", label: "Mbah" },
@@ -31,8 +32,16 @@ const FormCreateHousehold = ({
     formState: { errors },
   } = formPayload;
 
-  const sendFormData: SubmitHandler<CreateHouseholdFormData> = (data) =>
-    console.log(data);
+  const sendFormData: SubmitHandler<CreateHouseholdFormData> = async (data) => {
+    const callback = await insertNewHousehold(data);
+    if (callback.success) {
+      console.log("Berhasil");
+      console.log(callback);
+    } else {
+      console.error("Gagal");
+      console.log(callback);
+    }
+  };
 
   return (
     <FormProvider {...formPayload}>

@@ -10,7 +10,14 @@ export type HouseholdSimpleList = {
 };
 export type CreateHouseholdFormData = {
   headOfHousehold: string;
-  householdPronoun: string;
+  householdPronoun: HouseholdPronoun;
   firstNeighborId?: string;
   secondNeighborId?: string;
 };
+export enum HouseholdPronoun {
+  mas = "mas",
+  mbak = "mbak",
+  bapak = "bapak",
+  ibu = "ibu",
+  mbah = "mbah",
+}

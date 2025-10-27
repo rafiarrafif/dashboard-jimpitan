@@ -1,9 +1,10 @@
 import z from "zod";
+import { HouseholdPronoun } from "../types";
 
 export const CreateNewHouseholdSchema = z
   .object({
     headOfHousehold: z.string().min(1, "Nama Perwakilan Keluarga wajib diisi"),
-    householdPronoun: z.string().min(1, "Sapaan wajib dipilih"),
+    householdPronoun: z.enum(HouseholdPronoun, "Sapaan tidak valid"),
     firstNeighborId: z.string().optional(),
     secondNeighborId: z.string().optional(),
   })
