@@ -2,13 +2,13 @@ import { NextRequest, NextResponse } from "next/server";
 import { auth } from "./auth";
 
 export const middleware = async (request: NextRequest) => {
-  const rootUrl = new URL("/auth/login", request.url);
+  const loginUrl = new URL("/auth/login", request.url);
   const adminUrl = new URL("/admin", request.url);
   const { pathname } = request.nextUrl;
 
   if (pathname.startsWith("/admin")) {
     const session = await auth();
-    if (!session?.user) return NextResponse.redirect(rootUrl);
+    if (!session?.user) return NextResponse.redirect(loginUrl);
     NextResponse.next();
   }
 
