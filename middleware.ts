@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { auth } from "./auth";
 
 export const middleware = async (request: NextRequest) => {
-  const rootUrl = new URL("/", request.url);
+  const rootUrl = new URL("/auth/login", request.url);
   const { pathname } = request.nextUrl;
 
   if (pathname.startsWith("/admin")) {
