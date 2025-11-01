@@ -1,7 +1,8 @@
+import Dashboard from "@/features/admin/page/Dashboard";
 import React from "react";
 
 const page = () => {
-  return <div>Example admin page</div>;
+  return <Dashboard />;
 };
 
 export default page;
