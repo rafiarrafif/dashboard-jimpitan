@@ -4,7 +4,7 @@ import { Icon } from "@iconify/react";
 import { useSession } from "next-auth/react";
 import React from "react";
 
-const NavbarDashboard = () => {
+const HeaderDashboard = () => {
   const { data: session } = useSession();
 
   return (
@@ -31,4 +31,4 @@ const NavbarDashboard = () => {
   );
 };
 
-export default NavbarDashboard;
+export default HeaderDashboard;

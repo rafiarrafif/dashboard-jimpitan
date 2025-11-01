@@ -1,12 +1,12 @@
 "use client";
 import React from "react";
-import NavbarDashboard from "../ui/dashboard/Navbar";
 import Greetings from "../ui/dashboard/Greetings";
+import HeaderDashboard from "../ui/dashboard/Header";
 
 const Dashboard = () => {
   return (
     <div>
-      <NavbarDashboard />
+      <HeaderDashboard />
       <div className="mx-4">
         <Greetings />
       </div>
