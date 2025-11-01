@@ -1,9 +1,12 @@
 "use client";
 import { Avatar, Navbar, NavbarContent } from "@heroui/react";
 import { Icon } from "@iconify/react";
+import { useSession } from "next-auth/react";
 import React from "react";
 
 const NavbarDashboard = () => {
+  const { data: session } = useSession();
+
   return (
     <Navbar classNames={{ base: "bg-[#e9e9e9]" }}>
       <NavbarContent>
@@ -18,7 +21,7 @@ const NavbarDashboard = () => {
       <NavbarContent justify="end">
         <Avatar
           size="md"
-          src="https://i.pravatar.cc/150?u=a04258114e29026708c"
+          src={session?.user?.image as string}
           classNames={{
             base: "rounded-sm",
           }}
