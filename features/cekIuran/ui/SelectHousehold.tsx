@@ -2,15 +2,14 @@
 import { Select, SelectItem } from "@heroui/react";
 import React from "react";
 import { getAllHousehold } from "../../../entities/household/model/getAllHousehold";
-import { HouseholdList } from "@/entities/household/types";
 
-let householdData: HouseholdList[] | null = null;
+let householdData: { id: string; householdName: string }[] | null = null;
 let fetchPromise: Promise<void> | null = null;
 
 const SelectHousehold = () => {
   if (!fetchPromise) {
     fetchPromise = getAllHousehold().then((data) => {
-      householdData = data.data;
+      householdData = data;
     });
     throw fetchPromise;
   }
@@ -20,10 +19,8 @@ const SelectHousehold = () => {
   return (
     <div>
       <Select label="Nama Rumah" placeholder="Pilih Rumah" variant="bordered">
-        {householdData!.map((household) => (
-          <SelectItem key={household.id}>
-            {household.headOfHousehold}
-          </SelectItem>
+        {householdData.map((household) => (
+          <SelectItem key={household.id}>{household.householdName}</SelectItem>
         ))}
       </Select>
     </div>

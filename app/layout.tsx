@@ -1,4 +1,3 @@
-// @ts-expect-error: allow side-effect CSS import without type declarations
 import "./globals.css";
 import GeistFontProvider from "@/providers/fonts/GeistFontProvider";
 import HeroUIWrapper from "@/providers/HeroUIWrapper";
