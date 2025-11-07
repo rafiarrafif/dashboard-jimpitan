@@ -6,14 +6,25 @@ import MainScanner from "../ui/ScannerQR/MainScanner";
 
 const ScannerQR = () => {
   const [hasCameraPermission, setHasCameraPermission] = useState(false);
+  const [loadingText, setLoadingText] = useState("Menghubungkan ke kamera");
+
+  const getPermission = () => {
+    navigator.mediaDevices
+      .getUserMedia({ video: true })
+      .then(() => {
+        setHasCameraPermission(true);
+        window.location.reload();
+      })
+      .catch(() => {
+        setHasCameraPermission(false);
+        setLoadingText("Kamera tidak dapat terhubung");
+      });
+  };
 
   useEffect(() => {
     navigator.mediaDevices.enumerateDevices().then((devices) => {
       const videoInputs = devices.filter((d) => d.kind === "videoinput");
-      console.log(`data dari input vide: ${JSON.stringify(videoInputs)}`);
-      videoInputs[0].deviceId
-        ? setHasCameraPermission(true)
-        : setHasCameraPermission(false);
+      videoInputs[0].deviceId ? setHasCameraPermission(true) : getPermission();
     });
   }, []);
 
@@ -29,7 +40,7 @@ const ScannerQR = () => {
         ) : (
           <div className="h-48 bg-neutral-50 px-2 flex flex-col items-center justify-center gap-4 ">
             <Spinner />
-            <span>Menghubungkan ke kamera</span>
+            <span>{loadingText}</span>
           </div>
         )}
       </div>
