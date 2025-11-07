@@ -1,7 +1,8 @@
+import ScannerQR from "@/features/admin/page/ScannerQR";
 import React from "react";
 
 const page = () => {
-  return <div>Example page scan</div>;
+  return <ScannerQR />;
 };
 
 export default page;
