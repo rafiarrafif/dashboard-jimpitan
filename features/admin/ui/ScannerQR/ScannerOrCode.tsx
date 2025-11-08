@@ -1,10 +1,18 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
+import React, { Dispatch, SetStateAction, useEffect, useState } from "react";
 import { Button, InputOtp, Link, Spinner } from "@heroui/react";
 import MainScanner from "./MainScanner";
 
-const ScannerOrCode = () => {
+interface ScannerOrCodeProps {
+  useCameraMethod: boolean;
+  setUseCameraMethod: Dispatch<SetStateAction<boolean>>;
+}
+
+const ScannerOrCode = ({
+  useCameraMethod,
+  setUseCameraMethod,
+}: ScannerOrCodeProps) => {
   const [hasCameraPermission, setHasCameraPermission] = useState(false);
   const [loadingText, setLoadingText] = useState("Menghubungkan ke kamera");
 
@@ -28,7 +36,6 @@ const ScannerOrCode = () => {
     });
   }, []);
 
-  const [useCameraMethod, setUseCameraMethod] = useState(true);
   return (
     <div>
       {useCameraMethod ? (
