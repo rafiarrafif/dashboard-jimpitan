@@ -1,7 +1,7 @@
 "use client";
-import { Avatar, Navbar, NavbarContent } from "@heroui/react";
+import { Avatar, Button, Navbar, NavbarContent } from "@heroui/react";
 import { Icon } from "@iconify/react";
-import { useSession } from "next-auth/react";
+import { signOut, useSession } from "next-auth/react";
 import React from "react";
 
 const HeaderDashboard = () => {
@@ -10,16 +10,23 @@ const HeaderDashboard = () => {
   return (
     <Navbar classNames={{ base: "bg-[#e9e9e9]" }}>
       <NavbarContent>
-        <Icon
-          icon="material-symbols:logout-rounded"
-          className="text-2xl text-primary"
-        />
+        <Button
+          className="w-10 min-w-0 px-0 py-0 rounded-sm -ml-2"
+          onPress={() => signOut()}
+          variant="light"
+        >
+          <Icon
+            icon="material-symbols:logout-rounded"
+            className="text-2xl text-primary"
+          />
+        </Button>
       </NavbarContent>
       <NavbarContent justify="center">
         <h1 className="font-medium text-lg">Dashboard</h1>
       </NavbarContent>
       <NavbarContent justify="end">
         <Avatar
+          draggable={false}
           size="md"
           src={session?.user?.image as string}
           classNames={{
