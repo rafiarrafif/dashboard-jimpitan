@@ -78,11 +78,12 @@ model PaymentCoverage {
 model Collector {
   id String @id @default(uuid()) @db.Uuid
   name String @db.Char(255)
-  phone String @db.Char(20)
+  phone String? @db.Char(20)
   email String @db.Char(255)
-  password String @db.Char(255)
-  household Household @relation("householdOfCollector", fields: [householdId], references: [id])
-  householdId String @db.Uuid
+  googleId String @db.Text
+  profilePicture String @db.Text
+  household Household? @relation("householdOfCollector", fields: [householdId], references: [id])
+  householdId String? @db.Uuid
   deletedAt DateTime?
   createdAt DateTime @default(now())
   updatedAt DateTime @default(now()) @updatedAt
