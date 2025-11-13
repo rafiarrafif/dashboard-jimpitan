@@ -1,6 +1,13 @@
 import { create } from "zustand";
 
-export const HeaderSearchListStore = create((set) => ({
-  searchHousehold: "",
-  setSearchHousehold: (value: string) => set({ searchHousehold: value }),
-}));
+interface HeaderSearchListStore {
+  searchHousehold: string;
+  setSearchHousehold: (value: string) => void;
+}
+
+export const useHeaderSearchListStore = create<HeaderSearchListStore>(
+  (set) => ({
+    searchHousehold: "",
+    setSearchHousehold: (value: string) => set({ searchHousehold: value }),
+  })
+);
