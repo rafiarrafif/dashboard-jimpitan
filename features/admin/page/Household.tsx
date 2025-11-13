@@ -6,7 +6,6 @@ import CreateButton from "../ui/Household/CreateButton";
 import HouseholdList from "../ui/Household/HouseholdList";
 import LoadingScreen from "@/shared/ui/LoadingScreen";
 import { getAllHousehold } from "@/entities/household/model/getAllHousehold";
-import { useHeaderSearchListStore } from "../store/HeaderSearchList.store";
 
 const Household = () => {
   const [householdList, setHouseholdList] = useState<
@@ -20,16 +19,11 @@ const Household = () => {
     })();
   }, []);
 
-  const searchHousehold = useHeaderSearchListStore(
-    (state) => state.searchHousehold
-  );
-
   return (
     <div className="h-screen">
       {householdList ? (
         <div>
           <SearchHeader />
-          <p>{searchHousehold}</p>
           <HouseholdList householdList={householdList} />
         </div>
       ) : (
