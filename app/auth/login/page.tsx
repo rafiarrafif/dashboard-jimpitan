@@ -1,4 +1,3 @@
-import { signIn } from "@/shared/libs/auth/auth-client";
 import SignIn from "@/features/auth/ui/SignIn";
 import React from "react";
 
@@ -10,18 +9,7 @@ const page = () => {
         <h3 className="text-neutral-600">Silahkan login terlebih dahulu</h3>
       </div>
       <div className="mx-4 mt-6">
-        <form
-          action={async () => {
-            "use server";
-            await signIn.social({
-              provider: "google",
-              callbackURL: "/admin",
-              disableRedirect: true,
-            });
-          }}
-        >
-          <SignIn />
-        </form>
+        <SignIn />
       </div>
     </div>
   );

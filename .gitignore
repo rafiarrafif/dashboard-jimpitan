@@ -41,7 +41,9 @@ yarn-error.log*
 *.tsbuildinfo
 next-env.d.ts
 
+sqlite.db
+/better-auth_migrations
+
 /scripts
 /app/generated/prisma
-
 /app/generated/prisma
