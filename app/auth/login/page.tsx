@@ -1,4 +1,4 @@
-import { signIn } from "@/auth";
+import { signIn } from "@/shared/libs/auth/auth-client";
 import SignIn from "@/features/auth/ui/SignIn";
 import React from "react";
 
@@ -13,7 +13,11 @@ const page = () => {
         <form
           action={async () => {
             "use server";
-            await signIn("google", { redirectTo: "/admin" });
+            await signIn.social({
+              provider: "google",
+              callbackURL: "/admin",
+              disableRedirect: true,
+            });
           }}
         >
           <SignIn />
