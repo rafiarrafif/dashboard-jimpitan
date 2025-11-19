@@ -1,7 +1,6 @@
 import "./globals.css";
 import GeistFontProvider from "@/providers/fonts/GeistFontProvider";
 import HeroUIWrapper from "@/providers/HeroUIWrapper";
-import SessionWrapper from "@/providers/SessionWrapper";
 import React from "react";
 
 const RootLayout = ({ children }: Readonly<{ children: React.ReactNode }>) => {
@@ -9,9 +8,7 @@ const RootLayout = ({ children }: Readonly<{ children: React.ReactNode }>) => {
     <html lang="en" className="bg-[#E9E9E9]">
       <body>
         <GeistFontProvider>
-          <SessionWrapper>
-            <HeroUIWrapper>{children}</HeroUIWrapper>
-          </SessionWrapper>
+          <HeroUIWrapper>{children}</HeroUIWrapper>
         </GeistFontProvider>
       </body>
     </html>
