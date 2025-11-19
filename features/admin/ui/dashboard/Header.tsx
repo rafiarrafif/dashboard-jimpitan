@@ -1,18 +1,28 @@
 "use client";
 import { Avatar, Button, Navbar, NavbarContent } from "@heroui/react";
+import { signOut, useSession } from "@/shared/libs/auth/auth-client";
 import { Icon } from "@iconify/react";
-// import { signOut, useSession } from "next-auth/react";
+import { useRouter } from "next/navigation";
 import React from "react";
 
 const HeaderDashboard = () => {
-  // const { data: session } = useSession();
+  const { data: session } = useSession();
+  const router = useRouter();
 
   return (
     <Navbar classNames={{ base: "bg-[#e9e9e9]" }}>
       <NavbarContent>
         <Button
           className="w-10 min-w-0 px-0 py-0 rounded-sm -ml-2"
-          // onPress={() => signOut()}
+          onPress={() =>
+            signOut({
+              fetchOptions: {
+                onSuccess: () => {
+                  router.push("/auth/login");
+                },
+              },
+            })
+          }
           variant="light"
         >
           <Icon
@@ -28,7 +38,7 @@ const HeaderDashboard = () => {
         <Avatar
           draggable={false}
           size="md"
-          // src={session?.user?.image as string}
+          src={session?.user?.image as string}
           classNames={{
             base: "rounded-sm",
           }}
