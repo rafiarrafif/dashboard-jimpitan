@@ -1,7 +1,6 @@
 import { betterAuth } from "better-auth";
 import { prismaAdapter } from "better-auth/adapters/prisma";
 import { prisma } from "./shared/libs/database/prisma/connector";
-import Database from "better-sqlite3";
 
 export const auth = betterAuth({
   database: prismaAdapter(prisma, {
