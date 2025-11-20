@@ -15,25 +15,27 @@ datasource db {
 }
 
 model Household {
-  id                String            @id @default(uuid()) @db.Uuid
-  householdName     String            @db.Char(255)
-  headOfHousehold   String            @db.Char(255)
-  householdPronoun  HouseholdPronouns
-  firstNeighbor     Household?        @relation("FirstNeighbor", fields: [firstNeighborId], references: [id])
-  secondNeighbor    Household?        @relation("SecondNeighbor", fields: [secondNeighborId], references: [id])
-  firstNeighborId   String?           @db.Uuid
-  secondNeighborId  String?           @db.Uuid
-  deletedAt         DateTime?
-  createdAt         DateTime          @default(now()) 
-  updatedAt         DateTime          @default(now()) @updatedAt
+  id               String            @id @default(uuid()) @db.Uuid
+  householdName    String            @db.Char(255)
+  headOfHousehold  String            @db.Char(255)
+  householdPronoun HouseholdPronouns
+  firstNeighbor    Household?        @relation("FirstNeighbor", fields: [firstNeighborId], references: [id])
+  secondNeighbor   Household?        @relation("SecondNeighbor", fields: [secondNeighborId], references: [id])
+  firstNeighborId  String?           @db.Uuid
+  secondNeighborId String?           @db.Uuid
+  deletedAt        DateTime?
+  createdAt        DateTime          @default(now())
+  updatedAt        DateTime          @default(now()) @updatedAt
 
-  firstNeighborOf   Household[]       @relation("FirstNeighbor")
-  secondNeighborOf  Household[]       @relation("SecondNeighbor")
-  transactions      Transaction[]     @relation("householdTransactions")
-  paymentCoverages  PaymentCoverage[] @relation("householdPaymentCoverage")
-  collector         Collector[]       @relation("householdOfCollector")
+  firstNeighborOf  Household[]       @relation("FirstNeighbor")
+  secondNeighborOf Household[]       @relation("SecondNeighbor")
+  transactions     Transaction[]     @relation("householdTransactions")
+  paymentCoverages PaymentCoverage[] @relation("householdPaymentCoverage")
+  collector        Collector[]       @relation("householdOfCollector")
+
   @@map("households")
 }
+
 enum HouseholdPronouns {
   mas
   mbak
@@ -55,7 +57,8 @@ model Transaction {
   createdAt   DateTime  @default(now())
   updatedAt   DateTime  @default(now()) @updatedAt
 
-  paymentCoverages  PaymentCoverage[]   @relation("paymentCoverageTransaction")
+  paymentCoverages PaymentCoverage[] @relation("paymentCoverageTransaction")
+
   @@map("transactions")
 }
 
@@ -72,22 +75,73 @@ model PaymentCoverage {
   deletedAt     DateTime?
   createdAt     DateTime    @default(now())
   updatedAt     DateTime    @default(now()) @updatedAt
+
   @@map("payment_coverages")
 }
 
 model Collector {
-  id String @id @default(uuid()) @db.Uuid
-  name String @db.Char(255)
-  phone String? @db.Char(20)
-  email String @db.Char(255) @unique
-  googleId String @db.Text
-  profilePicture String @db.Text
-  household Household? @relation("householdOfCollector", fields: [householdId], references: [id])
-  householdId String? @db.Uuid
-  deletedAt DateTime?
-  createdAt DateTime @default(now())
-  updatedAt DateTime @default(now()) @updatedAt
+  id             String     @id @default(uuid()) @db.Uuid
+  name           String     @db.Char(255)
+  phone          String?    @db.Char(20)
+  email          String     @db.Char(255) @unique
+  googleId       String     @db.Text
+  profilePicture String     @db.Text
+  household      Household? @relation("householdOfCollector", fields: [householdId], references: [id])
+  householdId    String?    @db.Uuid
+  deletedAt      DateTime?
+  createdAt      DateTime   @default(now())
+  updatedAt      DateTime   @default(now()) @updatedAt
 
-  collections Transaction[] @relation("transactionCollector")
+  collections   Transaction[] @relation("transactionCollector")
+  emailVerified Boolean       @default(false)
+  image         String?
+  sessions      Session[]
+  accounts      Account[]
+
   @@map("collectors")
+}
+
+model Session {
+  id        String    @id
+  expiresAt DateTime
+  token     String
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  ipAddress String?
+  userAgent String?
+  userId    String
+  collector Collector @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([token])
+  @@map("session")
+}
+
+model Account {
+  id                    String    @id
+  accountId             String
+  providerId            String
+  userId                String
+  collector             Collector @relation(fields: [userId], references: [id], onDelete: Cascade)
+  accessToken           String?
+  refreshToken          String?
+  idToken               String?
+  accessTokenExpiresAt  DateTime?
+  refreshTokenExpiresAt DateTime?
+  scope                 String?
+  password              String?
+  createdAt             DateTime  @default(now())
+  updatedAt             DateTime  @updatedAt
+
+  @@map("account")
+}
+
+model Verification {
+  id         String   @id
+  identifier String
+  value      String
+  expiresAt  DateTime
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @default(now()) @updatedAt
+
+  @@map("verification")
 }

@@ -1,8 +1,15 @@
 import { betterAuth } from "better-auth";
+import { prismaAdapter } from "better-auth/adapters/prisma";
+import { prisma } from "./shared/libs/database/prisma/connector";
 import Database from "better-sqlite3";
 
 export const auth = betterAuth({
-  database: new Database("./sqlite.db"),
+  database: prismaAdapter(prisma, {
+    provider: "postgresql",
+  }),
+  user: {
+    modelName: "Collector",
+  },
   socialProviders: {
     google: {
       clientId: process.env.AUTH_GOOGLE_ID as string,
