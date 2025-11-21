@@ -11,6 +11,11 @@ generator client {
 
 datasource db {
   provider = "postgresql"
+  // The `url` property is no longer supported in schema files.
+  // Move connection URLs for Migrate to `prisma.config.ts` and
+  // pass either `adapter` for a direct database connection or
+  // `accelerateUrl` for Accelerate to the `PrismaClient` constructor.
+  // See https://pris.ly/d/config-datasource and https://pris.ly/d/prisma7-client-config
   url      = env("DATABASE_URL")
 }
 
@@ -50,7 +55,7 @@ model Transaction {
   householdId String    @db.Uuid
   amount      Float     @db.DoublePrecision
   issuer      Collector @relation("transactionCollector", fields: [issuedBy], references: [id])
-  issuedBy    String    @db.Uuid
+  issuedBy    String
   paidAt      DateTime
   note        String?   @db.Text
   deletedAt   DateTime?
@@ -80,25 +85,23 @@ model PaymentCoverage {
 }
 
 model Collector {
-  id             String     @id @default(uuid()) @db.Uuid
-  name           String     @db.Char(255)
-  phone          String?    @db.Char(20)
-  email          String     @db.Char(255) @unique
-  googleId       String     @db.Text
-  profilePicture String     @db.Text
-  household      Household? @relation("householdOfCollector", fields: [householdId], references: [id])
-  householdId    String?    @db.Uuid
-  deletedAt      DateTime?
-  createdAt      DateTime   @default(now())
-  updatedAt      DateTime   @default(now()) @updatedAt
-
-  collections   Transaction[] @relation("transactionCollector")
-  emailVerified Boolean       @default(false)
+  id            String    @id
+  name          String
+  email         String
+  phoneNumber   String?
+  emailVerified Boolean   @default(false)
   image         String?
-  sessions      Session[]
-  accounts      Account[]
+  household     Household? @relation("householdOfCollector", fields: [householdId], references: [id])
+  householdId   String?    @db.Uuid
+  deletedAt     DateTime?
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @default(now()) @updatedAt
 
-  @@map("collectors")
+  accounts      Account[]
+  sessions      Session[]
+  collections   Transaction[] @relation("transactionCollector")
+  @@unique([email])
+  @@map("Collector")
 }
 
 model Session {
