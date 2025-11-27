@@ -1,9 +1,8 @@
 "use client";
 import { HouseholdSimpleList } from "@/entities/household/types";
-import { Card, CardHeader, Chip } from "@heroui/react";
-import React from "react";
+import { Card, CardBody, CardHeader, Chip } from "@heroui/react";
 import { useHeaderSearchListStore } from "../../store/HeaderSearchList.store";
-import { Icon } from "@iconify/react";
+import React from "react";
 
 const HouseholdList = ({
   householdList,
@@ -25,7 +24,9 @@ const HouseholdList = ({
           <Card className="rounded-sm" key={index}>
             <CardHeader className="flex flex-row justify-between">
               <span className="font-medium text-lg">
-                {household.householdName}
+                {household.householdName.replace(/\b\w/g, (char) =>
+                  char.toUpperCase()
+                )}
               </span>
               <Chip
                 color="success"
