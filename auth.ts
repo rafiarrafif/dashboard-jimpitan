@@ -13,6 +13,8 @@ export const auth = betterAuth({
     google: {
       clientId: process.env.AUTH_GOOGLE_ID as string,
       clientSecret: process.env.AUTH_GOOGLE_SECRET as string,
+      accessType: "offline",
+      prompt: "select_account consent",
     },
   },
   session: {
