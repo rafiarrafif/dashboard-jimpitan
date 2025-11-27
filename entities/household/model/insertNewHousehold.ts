@@ -7,7 +7,9 @@ export const insertNewHousehold = async (data: CreateHouseholdFormData) => {
   try {
     const createdHousehold = prisma.household.create({
       data: {
-        householdName: `${data.householdPronoun} ${data.headOfHousehold}`,
+        householdName: `${
+          data.householdPronoun
+        } ${data.headOfHousehold.toLocaleLowerCase()}`,
         headOfHousehold: data.headOfHousehold.toLocaleLowerCase(),
         householdPronoun: data.householdPronoun as HouseholdPronouns,
         firstNeighborId: data.firstNeighborId || null,
