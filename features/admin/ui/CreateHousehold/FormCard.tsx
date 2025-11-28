@@ -53,7 +53,7 @@ const FormCreateHousehold = ({
           description: callback.message.description,
           color: "success",
         });
-        setTimeout(() => router.push("/"), 3000);
+        setTimeout(() => router.push("/admin/household"), 3000);
       } else {
         addToast({
           title: "Terjadi masalah",
