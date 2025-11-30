@@ -1,17 +1,30 @@
 "use client";
-
-import React, { Suspense } from "react";
-import CekIuranNavbar from "../ui/Navbar";
-import SelectHousehold from "../ui/SelectHousehold";
-import Loading from "../ui/Loading";
+import { getTinyAllHousehold } from "@/entities/household/model/getTinyAllHousehold";
+import { HouseholdSimpleList } from "@/entities/household/types";
+import LoadingScreen from "@/shared/ui/LoadingScreen";
+import React, { useEffect, useState } from "react";
 
 const CekIuran = () => {
+  const [householdList, setHouseholdList] = useState<
+    HouseholdSimpleList[] | null
+  >(null);
+
+  useEffect(() => {
+    (async () => {
+      const simpleHouseholdList = await getTinyAllHousehold();
+      setHouseholdList(simpleHouseholdList);
+    })();
+  }, []);
+
   return (
     <div>
-      <CekIuranNavbar />
-      <Suspense fallback={<Loading />}>
-        <SelectHousehold />
-      </Suspense>
+      {householdList ? (
+        <main>
+          <h1>{JSON.stringify(householdList)}</h1>
+        </main>
+      ) : (
+        <LoadingScreen />
+      )}
     </div>
   );
 };
