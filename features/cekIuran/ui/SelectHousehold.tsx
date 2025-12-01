@@ -1,25 +1,13 @@
 "use client";
+import { HouseholdSimpleList } from "@/entities/household/types";
 import { Select, SelectItem } from "@heroui/react";
 import React from "react";
-import { getAllHousehold } from "../../../entities/household/model/getAllHousehold";
 
-let householdData: { id: string; householdName: string }[] | null = null;
-let fetchPromise: Promise<void> | null = null;
-
-const SelectHousehold = () => {
-  if (!fetchPromise) {
-    fetchPromise = getAllHousehold().then((data) => {
-      householdData = data;
-    });
-    throw fetchPromise;
-  }
-
-  if (!householdData) throw fetchPromise;
-
+const SelectHousehold = ({ props }: { props: HouseholdSimpleList[] }) => {
   return (
     <div>
       <Select label="Nama Rumah" placeholder="Pilih Rumah" variant="bordered">
-        {householdData.map((household) => (
+        {props.map((household) => (
           <SelectItem key={household.id}>{household.householdName}</SelectItem>
         ))}
       </Select>

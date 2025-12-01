@@ -3,6 +3,7 @@ import { getTinyAllHousehold } from "@/entities/household/model/getTinyAllHouseh
 import { HouseholdSimpleList } from "@/entities/household/types";
 import LoadingScreen from "@/shared/ui/LoadingScreen";
 import React, { useEffect, useState } from "react";
+import SelectHousehold from "../ui/SelectHousehold";
 
 const CekIuran = () => {
   const [householdList, setHouseholdList] = useState<
@@ -20,7 +21,7 @@ const CekIuran = () => {
     <div>
       {householdList ? (
         <main>
-          <h1>{JSON.stringify(householdList)}</h1>
+          <SelectHousehold props={householdList} />
         </main>
       ) : (
         <LoadingScreen />
