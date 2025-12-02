@@ -21,7 +21,7 @@ const CekIuran = () => {
     <div>
       {householdList ? (
         <main>
-          <header className="text-center mt-8 mb-6">
+          <header className="text-center mt-8 mb-8">
             <h1 className="text-2xl font-semibold text-primary">Pilih rumah</h1>
             <p className="text-sm text-neutral-700">
               Masukan nama kepala rumah tangga sebagai perwakilan
