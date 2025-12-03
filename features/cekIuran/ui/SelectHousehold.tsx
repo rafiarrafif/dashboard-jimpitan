@@ -1,17 +1,37 @@
 "use client";
 import { HouseholdSimpleList } from "@/entities/household/types";
 import { Button, Form, Select, SelectItem } from "@heroui/react";
+import { useRouter } from "next/navigation";
 import React, { useState } from "react";
-import { FormProvider } from "react-hook-form";
+import { FormProvider, SubmitHandler, useForm } from "react-hook-form";
+
+interface SelectHouseholdInput {
+  householdId: string;
+}
 
 const SelectHousehold = ({ props }: { props: HouseholdSimpleList[] }) => {
+  const router = useRouter();
   const [submitLoading, setSubmitLoading] = useState(false);
+
+  const formPayload = useForm<SelectHouseholdInput>();
+  const { handleSubmit, register } = formPayload;
+
+  const redirectUserToDestination: SubmitHandler<SelectHouseholdInput> = (
+    data
+  ) => {
+    setSubmitLoading(true);
+    router.push(`/cek-iuran/${data.householdId}`);
+  };
 
   return (
     <div>
-      <FormProvider>
-        <Form className="mt-2 mx-2">
+      <FormProvider {...formPayload}>
+        <Form
+          className="mt-2 mx-2"
+          onSubmit={handleSubmit(redirectUserToDestination)}
+        >
           <Select
+            {...register("householdId")}
             items={props}
             label="Nama Rumah"
             placeholder="Pilih Rumah"
