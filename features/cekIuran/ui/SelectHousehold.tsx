@@ -1,6 +1,6 @@
 "use client";
 import { HouseholdSimpleList } from "@/entities/household/types";
-import { Button, Form, Select, SelectItem } from "@heroui/react";
+import { addToast, Button, Form, Select, SelectItem } from "@heroui/react";
 import { useRouter } from "next/navigation";
 import React, { useState } from "react";
 import { FormProvider, SubmitHandler, useForm } from "react-hook-form";
@@ -19,10 +19,17 @@ const SelectHousehold = ({ props }: { props: HouseholdSimpleList[] }) => {
   const redirectUserToDestination: SubmitHandler<SelectHouseholdInput> = (
     data
   ) => {
-    setSubmitLoading(true);
-    data.householdId
-      ? router.push(`/cek-iuran/${data.householdId}`)
-      : setSubmitLoading(false);
+    if (!data.householdId) {
+      addToast({
+        title: "Nama rumah belum dipilih",
+        description: "Silahkan pilih nama perwakilan rumah terlebih dahulu.",
+        color: "danger",
+        timeout: 3000,
+      });
+    } else {
+      setSubmitLoading(true);
+      router.push(`/cek-iuran/${data.householdId}`);
+    }
   };
 
   return (
