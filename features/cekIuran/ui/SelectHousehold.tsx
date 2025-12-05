@@ -20,7 +20,9 @@ const SelectHousehold = ({ props }: { props: HouseholdSimpleList[] }) => {
     data
   ) => {
     setSubmitLoading(true);
-    router.push(`/cek-iuran/${data.householdId}`);
+    data.householdId
+      ? router.push(`/cek-iuran/${data.householdId}`)
+      : setSubmitLoading(false);
   };
 
   return (
