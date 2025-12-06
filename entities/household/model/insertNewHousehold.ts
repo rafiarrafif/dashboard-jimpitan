@@ -2,10 +2,23 @@
 import { prisma } from "@/shared/libs/database/prisma/connector";
 import { CreateHouseholdFormData } from "../types";
 import { HouseholdPronouns } from "@/app/generated/prisma/enums";
+import { Household } from "@/app/generated/prisma/client";
 
-export const insertNewHousehold = async (data: CreateHouseholdFormData) => {
+interface InsertNewHousehold {
+  success: boolean;
+  message: {
+    title: string;
+    description: string;
+  };
+  data?: Household;
+  error?: unknown;
+}
+
+export const insertNewHousehold = async (
+  data: CreateHouseholdFormData
+): Promise<InsertNewHousehold> => {
   try {
-    const createdHousehold = prisma.household.create({
+    const createdHousehold = await prisma.household.create({
       data: {
         householdName: `${
           data.householdPronoun
@@ -33,7 +46,7 @@ export const insertNewHousehold = async (data: CreateHouseholdFormData) => {
         title: "Ada masalah",
         description: "Terdapat kesalahan saat ingin menyimpan data",
       },
-      data: error,
+      error: error,
     };
   }
 };

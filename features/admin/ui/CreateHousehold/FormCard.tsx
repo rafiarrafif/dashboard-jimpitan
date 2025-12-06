@@ -53,7 +53,10 @@ const FormCreateHousehold = ({
           description: callback.message.description,
           color: "success",
         });
-        setTimeout(() => router.push("/admin/household"), 3000);
+        setTimeout(
+          () => router.push(`/admin/household/show-qr?id=${callback.data!.id}`),
+          3000
+        );
       } else {
         addToast({
           title: "Terjadi masalah",
