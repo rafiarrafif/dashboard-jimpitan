@@ -2,13 +2,20 @@
 import { getHouseholdDetailPayment } from "@/entities/household/model/getHouseholdDetailPayment";
 import LoadingScreen from "@/shared/ui/LoadingScreen";
 import React, { useEffect, useState } from "react";
+import HeaderPage from "../ui/viewDetails/HeaderPage";
+import { HouseholdSimpleList } from "@/entities/household/types";
 
 const ViewDetail = ({ householdId }: { householdId: string }) => {
-  const [householdData, setHouseholdData] = useState<any>();
+  const [
+    householdData,
+    setHouseholdData,
+  ] = useState<HouseholdSimpleList | null>(null);
 
   useEffect(() => {
     (async () => {
-      const callback = await getHouseholdDetailPayment(householdId);
+      const callback = (await getHouseholdDetailPayment(
+        householdId
+      )) as HouseholdSimpleList;
       setHouseholdData(callback);
     })();
   }, []);
@@ -16,8 +23,8 @@ const ViewDetail = ({ householdId }: { householdId: string }) => {
   return (
     <div>
       {householdData ? (
-        <main>
-          <h1>{JSON.stringify(householdData)}</h1>
+        <main className="mx-4 pt-8">
+          <HeaderPage householdName={householdData.householdName} />
         </main>
       ) : (
         <LoadingScreen />

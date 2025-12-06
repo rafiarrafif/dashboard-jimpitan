@@ -7,6 +7,10 @@ export const getHouseholdDetailPayment = async (id: string) => {
       where: {
         id,
       },
+      select: {
+        id: true,
+        householdName: true,
+      },
     });
   } catch (error) {
     console.log("Failed to get household detail payment: ", error);
