@@ -1,17 +1,27 @@
 "use client";
 
 import { HouseholdMetaQR } from "@/entities/household/model/getHouseholdMetaQR";
+import { usePDF } from "react-to-pdf";
 import QRCode from "react-qr-code";
 import React from "react";
+import { Button } from "@heroui/react";
 
 const HouseholdQRCanvas = ({
   householdData,
 }: {
   householdData: HouseholdMetaQR;
 }) => {
+  const { toPDF, targetRef } = usePDF({
+    filename: `qr-${householdData.householdName
+      .trim()
+      .toLowerCase()
+      .split(" ")
+      .join("-")}.pdf`,
+  });
+
   return (
     <div>
-      <main className="mx-4 pt-6 flex justify-center">
+      <main ref={targetRef} className="mx-4 pt-6 flex justify-center">
         <div className="bg-primary w-fit rounded-md flex flex-col items-center p-2">
           <div className="py-2">
             <span className="font-medium text-neutral-100 text-2xl">
@@ -35,6 +45,18 @@ const HouseholdQRCanvas = ({
           </div>
         </div>
       </main>
+      <div className="mt-6 mx-8">
+        <Button
+          as="button"
+          className="w-full rounded-sm text-white h-14"
+          radius="none"
+          color="primary"
+          href="cek-iuran"
+          onPress={() => toPDF()}
+        >
+          Download as PDF
+        </Button>
+      </div>
     </div>
   );
 };
