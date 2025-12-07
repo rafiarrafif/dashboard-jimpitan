@@ -24,6 +24,7 @@ export const insertNewHousehold = async (
           data.householdPronoun
         } ${data.headOfHousehold.toLocaleLowerCase()}`,
         headOfHousehold: data.headOfHousehold.toLocaleLowerCase(),
+        pinKey: Math.floor(10000000 + Math.random() * 90000000),
         householdPronoun: data.householdPronoun as HouseholdPronouns,
         firstNeighborId: data.firstNeighborId || null,
         secondNeighborId: data.secondNeighborId || null,
