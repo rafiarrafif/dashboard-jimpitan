@@ -2,16 +2,16 @@
 
 import { IDetectedBarcode, Scanner } from "@yudiel/react-qr-scanner";
 import React, { useState } from "react";
+import PopupPayment from "./PopupPayment";
+import { useDisclosure } from "@heroui/react";
 
 const MainScanner = () => {
   const [cameraPaused, setCameraPaused] = useState(false);
+  const { isOpen, onOpen, onOpenChange } = useDisclosure();
 
   const onScanHandler = (result: IDetectedBarcode[]) => {
-    console.log(`berhasil! ${JSON.stringify(result)}`);
     setCameraPaused(true);
-    setTimeout(() => {
-      setCameraPaused(false);
-    }, 3000);
+    onOpen();
   };
 
   return (
@@ -21,6 +21,11 @@ const MainScanner = () => {
         onScan={onScanHandler}
         onError={(error) => console.log(error)}
         paused={cameraPaused}
+      />
+      <PopupPayment
+        isOpen={isOpen}
+        onOpenChange={onOpenChange}
+        cameraStatus={setCameraPaused}
       />
     </div>
   );
