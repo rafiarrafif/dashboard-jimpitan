@@ -1,7 +1,17 @@
 import "./globals.css";
+import { Metadata } from "next";
 import GeistFontProvider from "@/providers/fonts/GeistFontProvider";
 import HeroUIWrapper from "@/providers/HeroUIWrapper";
 import React from "react";
+
+export const metadata: Metadata = {
+  title: "Sistem Jimpitan Jatirejo",
+  description: "Sistem transparansi jimpitan dan penggunaan dana desa jatirejo",
+  openGraph: {
+    description:
+      "Sistem transparansi jimpitan dan penggunaan dana desa jatirejo",
+  },
+};
 
 const RootLayout = ({ children }: Readonly<{ children: React.ReactNode }>) => {
   return (
