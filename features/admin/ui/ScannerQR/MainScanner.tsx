@@ -6,11 +6,13 @@ import PopupPayment from "./PopupPayment";
 import { useDisclosure } from "@heroui/react";
 
 const MainScanner = () => {
+  const [scannerValue, setScannerValue] = useState<string | null>(null);
   const [cameraPaused, setCameraPaused] = useState(false);
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
 
   const onScanHandler = (result: IDetectedBarcode[]) => {
     setCameraPaused(true);
+    setScannerValue(result[0].rawValue);
     onOpen();
   };
 
@@ -26,6 +28,7 @@ const MainScanner = () => {
         isOpen={isOpen}
         onOpenChange={onOpenChange}
         cameraStatus={setCameraPaused}
+        scannerValue={scannerValue!}
       />
     </div>
   );

@@ -12,10 +12,12 @@ const PopupPayment = ({
   isOpen,
   onOpenChange,
   cameraStatus,
+  scannerValue,
 }: {
   isOpen: boolean;
   onOpenChange: (isOpen: boolean) => void;
   cameraStatus: React.Dispatch<React.SetStateAction<boolean>>;
+  scannerValue: string;
 }) => {
   return (
     <Modal
@@ -32,7 +34,7 @@ const PopupPayment = ({
         {(onClose) => (
           <>
             <ModalHeader className="flex flex-col gap-1">
-              Modal Title
+              {scannerValue}
             </ModalHeader>
             <ModalBody>
               <p>
