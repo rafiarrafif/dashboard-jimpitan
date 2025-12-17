@@ -1,3 +1,5 @@
+import { getHouseholdDetailPayment } from "@/entities/household/model/getHouseholdDetailPayment";
+import { HouseholdSimpleList } from "@/entities/household/types";
 import {
   Button,
   Modal,
@@ -6,7 +8,7 @@ import {
   ModalFooter,
   ModalHeader,
 } from "@heroui/react";
-import React from "react";
+import React, { useEffect } from "react";
 
 const PopupPayment = ({
   isOpen,
@@ -19,6 +21,18 @@ const PopupPayment = ({
   cameraStatus: React.Dispatch<React.SetStateAction<boolean>>;
   scannerValue: string;
 }) => {
+  const [
+    householdData,
+    setHouseholdData,
+  ] = React.useState<HouseholdSimpleList | null>(null);
+
+  useEffect(() => {
+    (async () => {
+      const res = await getHouseholdDetailPayment(scannerValue);
+      if (res) setHouseholdData(res);
+    })();
+  }, []);
+
   return (
     <Modal
       hideCloseButton
@@ -34,7 +48,7 @@ const PopupPayment = ({
         {(onClose) => (
           <>
             <ModalHeader className="flex flex-col gap-1">
-              {scannerValue}
+              {householdData?.householdName || "Loading..."}
             </ModalHeader>
             <ModalBody>
               <p>
