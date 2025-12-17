@@ -1,4 +1,4 @@
-import { getHouseholdDetailPayment } from "@/entities/household/model/getHouseholdDetailPayment";
+import { getHouseholdPopupPayment } from "@/entities/household/model/getHouseholdPopupPayment";
 import { HouseholdSimpleList } from "@/entities/household/types";
 import {
   Button,
@@ -27,11 +27,13 @@ const PopupPayment = ({
   ] = React.useState<HouseholdSimpleList | null>(null);
 
   useEffect(() => {
+    if (!scannerValue) return;
     (async () => {
-      const res = await getHouseholdDetailPayment(scannerValue);
-      if (res) setHouseholdData(res);
+      const res = await getHouseholdPopupPayment(parseInt(scannerValue));
+      setHouseholdData(res as HouseholdSimpleList);
+      console.log("res popup payment: ", res);
     })();
-  }, []);
+  }, [scannerValue]);
 
   return (
     <Modal
@@ -48,7 +50,7 @@ const PopupPayment = ({
         {(onClose) => (
           <>
             <ModalHeader className="flex flex-col gap-1">
-              {householdData?.householdName || "Loading..."}
+              {householdData?.householdName.trim() || "Loading..."}
             </ModalHeader>
             <ModalBody>
               <p>

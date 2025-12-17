@@ -24,7 +24,7 @@ model Household {
   householdName    String            @db.Char(255)
   headOfHousehold  String            @db.Char(255)
   householdPronoun HouseholdPronouns
-  pinKey           Int
+  pinKey           Int               @unique
   firstNeighbor    Household?        @relation("FirstNeighbor", fields: [firstNeighborId], references: [id])
   secondNeighbor   Household?        @relation("SecondNeighbor", fields: [secondNeighborId], references: [id])
   firstNeighborId  String?           @db.Uuid
