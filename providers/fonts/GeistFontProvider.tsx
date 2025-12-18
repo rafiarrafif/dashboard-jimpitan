@@ -1,7 +1,7 @@
 import React from "react";
 import localFont from "next/font/local";
 
-const Geist = localFont({
+export const GeistFont = localFont({
   src: [
     {
       path: "../../fonts/SpaceGrotesk-Bold.ttf",
@@ -29,12 +29,13 @@ const Geist = localFont({
       style: "normal",
     },
   ],
+  variable: "--font-geist",
 });
 
 const GeistFontProvider = ({
   children,
 }: Readonly<{ children: React.ReactNode }>) => {
-  return <div className={`${Geist.className}`}>{children}</div>;
+  return <div className={`${GeistFont.variable} font-geist`}>{children}</div>;
 };
 
 export default GeistFontProvider;

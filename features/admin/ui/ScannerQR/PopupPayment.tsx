@@ -1,5 +1,6 @@
 import { getHouseholdPopupPayment } from "@/entities/household/model/getHouseholdPopupPayment";
 import { HouseholdSimpleList } from "@/entities/household/types";
+import { GeistFont } from "@/providers/fonts/GeistFontProvider";
 import {
   Button,
   Modal,
@@ -46,11 +47,13 @@ const PopupPayment = ({
         cameraStatus(false);
       }}
     >
-      <ModalContent>
+      <ModalContent className={`${GeistFont.variable} font-geist`}>
         {(onClose) => (
           <>
             <ModalHeader className="flex flex-col gap-1">
-              {householdData?.householdName.trim() || "Loading..."}
+              {householdData?.householdName
+                .trim()
+                .replace(/\b\w/g, (char) => char.toUpperCase()) || "Loading..."}
             </ModalHeader>
             <ModalBody>
               <p>
