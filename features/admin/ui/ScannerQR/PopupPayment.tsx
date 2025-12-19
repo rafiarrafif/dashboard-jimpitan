@@ -2,6 +2,7 @@ import { getHouseholdPopupPayment } from "@/entities/household/model/getHousehol
 import { HouseholdSimpleList } from "@/entities/household/types";
 import { GeistFont } from "@/providers/fonts/GeistFontProvider";
 import {
+  Alert,
   Button,
   Modal,
   ModalBody,
@@ -9,7 +10,7 @@ import {
   ModalFooter,
   ModalHeader,
 } from "@heroui/react";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 
 const PopupPayment = ({
   isOpen,
@@ -26,6 +27,8 @@ const PopupPayment = ({
     householdData,
     setHouseholdData,
   ] = React.useState<HouseholdSimpleList | null>(null);
+
+  const [unpaidAmount, setUnpaidAmount] = useState<null | number>(3);
 
   useEffect(() => {
     if (!scannerValue) return;
@@ -56,24 +59,19 @@ const PopupPayment = ({
                 .replace(/\b\w/g, (char) => char.toUpperCase()) || "Loading..."}
             </ModalHeader>
             <ModalBody>
-              <p>
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam
-                pulvinar risus non risus hendrerit venenatis. Pellentesque sit
-                amet hendrerit risus, sed porttitor quam.
-              </p>
-              <p>
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam
-                pulvinar risus non risus hendrerit venenatis. Pellentesque sit
-                amet hendrerit risus, sed porttitor quam.
-              </p>
-              <p>
-                Magna exercitation reprehenderit magna aute tempor cupidatat
-                consequat elit dolor adipisicing. Mollit dolor eiusmod sunt ex
-                incididunt cillum quis. Velit duis sit officia eiusmod Lorem
-                aliqua enim laboris do dolor eiusmod. Et mollit incididunt nisi
-                consectetur esse laborum eiusmod pariatur proident Lorem eiusmod
-                et. Culpa deserunt nostrud ad veniam.
-              </p>
+              {unpaidAmount ? (
+                <Alert
+                  color="danger"
+                  title={`Ada ${unpaidAmount} tunggakan`}
+                  description="Silahkan masukan nominal pembayaran."
+                />
+              ) : (
+                <Alert
+                  color="success"
+                  title="Tidak ada tunggakan"
+                  description="Semua pembayaran sudah lunas. Tidak dapat menambahkan pembayaran baru."
+                />
+              )}
             </ModalBody>
             <ModalFooter>
               <Button color="danger" variant="light" onPress={onClose}>
