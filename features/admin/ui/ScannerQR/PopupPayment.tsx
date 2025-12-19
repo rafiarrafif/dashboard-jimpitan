@@ -28,7 +28,7 @@ const PopupPayment = ({
     setHouseholdData,
   ] = React.useState<HouseholdSimpleList | null>(null);
 
-  const [unpaidAmount, setUnpaidAmount] = useState<null | number>(3);
+  const [unpaidAmount, setUnpaidAmount] = useState<null | number>(0);
 
   useEffect(() => {
     if (!scannerValue) return;
@@ -49,11 +49,14 @@ const PopupPayment = ({
       onClose={() => {
         cameraStatus(false);
       }}
+      classNames={{
+        base: "rounded-sm",
+      }}
     >
       <ModalContent className={`${GeistFont.variable} font-geist`}>
         {(onClose) => (
           <>
-            <ModalHeader className="flex flex-col gap-1">
+            <ModalHeader className="flex flex-col gap-1 pb-2 text-xl text-center">
               {householdData?.householdName
                 .trim()
                 .replace(/\b\w/g, (char) => char.toUpperCase()) || "Loading..."}
@@ -64,21 +67,32 @@ const PopupPayment = ({
                   color="danger"
                   title={`Ada ${unpaidAmount} tunggakan`}
                   description="Silahkan masukan nominal pembayaran."
+                  classNames={{
+                    base: "rounded-sm",
+                  }}
                 />
               ) : (
                 <Alert
                   color="success"
                   title="Tidak ada tunggakan"
                   description="Semua pembayaran sudah lunas. Tidak dapat menambahkan pembayaran baru."
+                  classNames={{
+                    base: "rounded-sm",
+                  }}
                 />
               )}
             </ModalBody>
             <ModalFooter>
               <Button color="danger" variant="light" onPress={onClose}>
-                Close
+                Batal
               </Button>
-              <Button color="primary" onPress={onClose}>
-                Action
+              <Button
+                isDisabled={!unpaidAmount}
+                color="primary"
+                className="text-white rounded-sm"
+                onPress={onClose}
+              >
+                Bayar
               </Button>
             </ModalFooter>
           </>
