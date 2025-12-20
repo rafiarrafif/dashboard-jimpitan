@@ -85,6 +85,16 @@ model PaymentCoverage {
   @@map("payment_coverages")
 }
 
+model RegisteredCollector {
+  id        String   @id
+  name      String
+  email     String   @unique
+  createdAt DateTime @default(now())
+  updatedAt DateTime @default(now()) @updatedAt
+
+  @@map("registered_collector")
+}
+
 model Collector {
   id            String    @id
   name          String
@@ -94,6 +104,7 @@ model Collector {
   image         String?
   household     Household? @relation("householdOfCollector", fields: [householdId], references: [id])
   householdId   String?    @db.Uuid
+  validAccount  Boolean    @default(false)
   deletedAt     DateTime?
   createdAt     DateTime  @default(now())
   updatedAt     DateTime  @default(now()) @updatedAt
