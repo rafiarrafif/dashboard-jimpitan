@@ -6,17 +6,11 @@
 
 generator client {
   provider = "prisma-client"
-  output   = "../app/generated/prisma"
+  output   = "../generated/prisma"
 }
 
 datasource db {
   provider = "postgresql"
-  // The `url` property is no longer supported in schema files.
-  // Move connection URLs for Migrate to `prisma.config.ts` and
-  // pass either `adapter` for a direct database connection or
-  // `accelerateUrl` for Accelerate to the `PrismaClient` constructor.
-  // See https://pris.ly/d/config-datasource and https://pris.ly/d/prisma7-client-config
-  url      = env("DATABASE_URL")
 }
 
 model Household {
