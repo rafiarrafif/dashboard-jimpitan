@@ -1,5 +1,5 @@
 "use client";
-import { useSession } from "@/shared/libs/auth/auth-client";
+import { useSession } from "@/shared/libs/auth/Google.auth";
 import React from "react";
 
 const Greetings = () => {

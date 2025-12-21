@@ -1,5 +1,5 @@
 "use client";
-import { signIn } from "@/shared/libs/auth/auth-client";
+import { signIn } from "@/shared/libs/auth/Google.auth";
 import { Button } from "@heroui/react";
 import { Icon } from "@iconify/react";
 import React, { useState } from "react";

@@ -1,6 +1,6 @@
 "use client";
 import { Avatar, Button, Navbar, NavbarContent } from "@heroui/react";
-import { signOut, useSession } from "@/shared/libs/auth/auth-client";
+import { signOut, useSession } from "@/shared/libs/auth/Google.auth";
 import { Icon } from "@iconify/react";
 import { useRouter } from "next/navigation";
 import React from "react";
