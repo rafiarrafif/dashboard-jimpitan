@@ -1,5 +1,5 @@
 "use client";
-import { useSession } from "@/shared/libs/auth/Google.auth";
+import { useSession } from "next-auth/react";
 import React from "react";
 
 const Greetings = () => {

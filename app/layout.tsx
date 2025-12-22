@@ -3,6 +3,7 @@ import { Metadata } from "next";
 import GeistFontProvider from "@/providers/fonts/GeistFontProvider";
 import HeroUIWrapper from "@/providers/HeroUIWrapper";
 import React from "react";
+import { SessionProvider } from "next-auth/react";
 
 export const metadata: Metadata = {
   title: "Sistem Jimpitan Jatirejo",
@@ -18,7 +19,9 @@ const RootLayout = ({ children }: Readonly<{ children: React.ReactNode }>) => {
     <html lang="en" className="bg-[#E9E9E9]">
       <body>
         <GeistFontProvider>
-          <HeroUIWrapper>{children}</HeroUIWrapper>
+          <SessionProvider>
+            <HeroUIWrapper>{children}</HeroUIWrapper>
+          </SessionProvider>
         </GeistFontProvider>
       </body>
     </html>

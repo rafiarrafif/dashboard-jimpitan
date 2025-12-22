@@ -1,5 +1,4 @@
 "use client";
-import { signIn } from "@/shared/libs/auth/Google.auth";
 import { Button } from "@heroui/react";
 import { Icon } from "@iconify/react";
 import React, { useState } from "react";
@@ -17,13 +16,7 @@ const SignIn = () => {
       startContent={
         <Icon className="w-4 h-4" icon="material-icon-theme:google" />
       }
-      onPress={async () => {
-        setLoadingState(true);
-        await signIn.social({
-          provider: "google",
-          callbackURL: "/admin",
-        });
-      }}
+      type="submit"
     >
       Continue with Google
     </Button>
