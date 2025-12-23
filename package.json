@@ -12,11 +12,13 @@
     "push": "bun ./scripts/multipush.git.ts"
   },
   "dependencies": {
+    "@auth/prisma-adapter": "^2.11.1",
     "@heroui/react": "^2.8.2",
     "@hookform/resolvers": "^5.2.2",
     "@iconify/react": "^6.0.2",
     "@prisma/adapter-pg": "^7.2.0",
     "@prisma/client": "^7.2.0",
+    "@prisma/extension-accelerate": "^3.0.1",
     "@tailwindcss/postcss": "^4.1.11",
     "@types/better-sqlite3": "^7.6.13",
     "@types/pg": "^8.16.0",
