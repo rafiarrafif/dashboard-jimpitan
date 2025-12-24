@@ -90,7 +90,7 @@ model RegisteredCollector {
 }
 
 model Collector {
-  id            String    @id
+  id            String    @id @default(uuid()) @db.Uuid
   name          String
   email         String    @unique
   phoneNumber   String?
