@@ -92,17 +92,16 @@ model RegisteredCollector {
 model Collector {
   id            String    @id
   name          String
-  email         String
+  email         String    @unique
   phoneNumber   String?
-  image         String?
   household     Household? @relation("householdOfCollector", fields: [householdId], references: [id])
   householdId   String?    @db.Uuid
   deletedAt     DateTime?
   createdAt     DateTime  @default(now())
   updatedAt     DateTime  @default(now()) @updatedAt
 
+  account       User      @relation(fields: [email], references: [email])
   collections   Transaction[] @relation("transactionCollector")
-  @@unique([email])
   @@map("Collector")
 }
 
@@ -117,6 +116,7 @@ model User {
   accounts      Account[]
   sessions      Session[]
  
+  holder        Collector?
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }
