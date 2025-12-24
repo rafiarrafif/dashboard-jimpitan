@@ -100,7 +100,6 @@ model Collector {
   createdAt     DateTime  @default(now())
   updatedAt     DateTime  @default(now()) @updatedAt
 
-  account       User      @relation(fields: [email], references: [email])
   collections   Transaction[] @relation("transactionCollector")
   @@map("Collector")
 }
@@ -116,7 +115,6 @@ model User {
   accounts      Account[]
   sessions      Session[]
  
-  holder        Collector?
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }

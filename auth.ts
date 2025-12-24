@@ -6,4 +6,18 @@ import Google from "next-auth/providers/google";
 export const { handlers, signIn, signOut, auth } = NextAuth({
   adapter: PrismaAdapter(prisma),
   providers: [Google],
+  callbacks: {
+    async session({ session, token }) {
+      const collector = await prisma.collector.findUnique({
+        where: { email: session.user.email ?? "" },
+        select: {
+          id: true,
+          name: true,
+        },
+      });
+      session.user.realName = collector?.name ?? null;
+      session.user.realId = collector?.id ?? null;
+      return session;
+    },
+  },
 });
