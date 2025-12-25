@@ -6,12 +6,8 @@ export async function middleware(req: NextRequest) {
 
   if (pathname.startsWith("/admin")) {
     const token = await getToken({ req, secret: process.env.AUTH_SECRET });
-    console.log("env tersimpan: ", process.env.AUTH_SECRET);
-    console.log("hasil token: ", token);
-    const target = new URL("/auth/login", req.url);
-    const target2 = new URL("/debug", req.url);
-    if (!token) return NextResponse.redirect(target);
-    if (!token.user.realId) return NextResponse.redirect(target2);
+    if (!token) return NextResponse.redirect(new URL("/auth/login", req.url));
+    if (!token.realId) return NextResponse.redirect(new URL("/debug", req.url));
     return NextResponse.next();
   }
 
