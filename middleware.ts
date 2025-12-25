@@ -7,7 +7,8 @@ export async function middleware(req: NextRequest) {
   if (pathname.startsWith("/admin")) {
     const token = await getToken({ req, secret: process.env.AUTH_SECRET });
     if (!token) return NextResponse.redirect(new URL("/auth/login", req.url));
-    if (!token.realId) return NextResponse.redirect(new URL("/debug", req.url));
+    if (!token.realId)
+      return NextResponse.redirect(new URL("/auth/blocked", req.url));
     return NextResponse.next();
   }
 
