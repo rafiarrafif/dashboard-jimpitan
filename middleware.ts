@@ -3,13 +3,28 @@ import { getToken } from "next-auth/jwt";
 
 export async function middleware(req: NextRequest) {
   const { pathname } = req.nextUrl;
+  const token = await getToken({ req, secret: process.env.AUTH_SECRET });
+
+  const loginUrl = new URL("/auth/login", req.url);
+  const adminUrl = new URL("/admin", req.url);
+  const blockedUrl = new URL("/auth/blocked", req.url);
 
   if (pathname.startsWith("/admin")) {
     const token = await getToken({ req, secret: process.env.AUTH_SECRET });
-    if (!token) return NextResponse.redirect(new URL("/auth/login", req.url));
-    if (!token.realId)
-      return NextResponse.redirect(new URL("/auth/blocked", req.url));
+    if (!token) return NextResponse.redirect(loginUrl);
+    if (!token.realId) return NextResponse.redirect(blockedUrl);
     return NextResponse.next();
+  }
+
+  if (pathname.startsWith("/auth/blocked")) {
+    if (!token) return NextResponse.redirect(loginUrl);
+    if (token?.realId) return NextResponse.redirect(adminUrl);
+    return NextResponse.next();
+  }
+
+  if (pathname.startsWith("/auth/login")) {
+    if (token) return NextResponse.redirect(adminUrl);
+    NextResponse.next();
   }
 
   return NextResponse.next();
