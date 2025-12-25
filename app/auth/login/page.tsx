@@ -13,7 +13,7 @@ const page = () => {
         <form
           action={async () => {
             "use server";
-            await signIn("google", { callbackURL: "/admin" });
+            await signIn("google", { redirectTo: "/admin" });
           }}
         >
           <SignIn />
