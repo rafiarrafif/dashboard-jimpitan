@@ -15,6 +15,9 @@ declare module "next-auth" {
 export const { handlers, signIn, signOut, auth } = NextAuth({
   adapter: PrismaAdapter(prisma),
   providers: [Google],
+  session: {
+    strategy: "jwt",
+  },
   callbacks: {
     async session({ session }) {
       const collector = await prisma.collector.findUnique({

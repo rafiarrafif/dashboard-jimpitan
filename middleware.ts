@@ -1,17 +1,19 @@
-import { NextResponse } from "next/server";
-// import { auth } from "./auth";
+import { NextRequest, NextResponse } from "next/server";
+import { getToken } from "next-auth/jwt";
 
-// export default auth((req) => {
-//   const { pathname } = req.nextUrl;
+export async function middleware(req: NextRequest) {
+  const { pathname } = req.nextUrl;
 
-//   if (!req.auth && pathname.startsWith("/admin")) {
-//     const newUrl = new URL("/auth/login", req.nextUrl.origin);
-//     return Response.redirect(newUrl);
-//   }
+  if (pathname.startsWith("/admin")) {
+    const token = await getToken({ req, secret: process.env.AUTH_SECRET });
+    console.log("env tersimpan: ", process.env.AUTH_SECRET);
+    console.log("hasil token: ", token);
+    const target = new URL("/auth/login", req.url);
+    const target2 = new URL("/debug", req.url);
+    if (!token) return NextResponse.redirect(target);
+    if (!token.user.realId) return NextResponse.redirect(target2);
+    return NextResponse.next();
+  }
 
-//   NextResponse.next();
-// });
-
-export const middleware = () => {
-  NextResponse.next();
-};
+  return NextResponse.next();
+}
