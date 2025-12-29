@@ -50,7 +50,7 @@ model Transaction {
   householdId String    @db.Uuid
   amount      Float     @db.DoublePrecision
   issuer      Collector @relation("transactionCollector", fields: [issuedBy], references: [id])
-  issuedBy    String
+  issuedBy    String    @db.Uuid
   paidAt      DateTime
   note        String?   @db.Text
   deletedAt   DateTime?
@@ -95,6 +95,7 @@ model Collector {
 }
 
 
+// Auth.js models
 model User {
   id            String          @id @default(cuid())
   name          String?
