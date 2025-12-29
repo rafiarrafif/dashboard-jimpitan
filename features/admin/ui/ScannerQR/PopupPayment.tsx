@@ -28,7 +28,7 @@ const PopupPayment = ({
     setHouseholdData,
   ] = React.useState<HouseholdSimpleList | null>(null);
 
-  const [unpaidAmount, setUnpaidAmount] = useState<null | number>(0);
+  const [unpaidAmount, setUnpaidAmount] = useState<null | number>(3);
 
   useEffect(() => {
     if (!scannerValue) return;

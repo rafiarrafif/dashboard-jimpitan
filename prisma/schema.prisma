@@ -79,16 +79,6 @@ model PaymentCoverage {
   @@map("payment_coverages")
 }
 
-model RegisteredCollector {
-  id        String   @id
-  name      String
-  email     String   @unique
-  createdAt DateTime @default(now())
-  updatedAt DateTime @default(now()) @updatedAt
-
-  @@map("registered_collector")
-}
-
 model Collector {
   id            String    @id @default(uuid()) @db.Uuid
   name          String
