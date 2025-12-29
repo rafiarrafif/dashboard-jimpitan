@@ -11,6 +11,11 @@ export const getHouseholdPopupPayment = async (pinKey: number) => {
       select: {
         id: true,
         householdName: true,
+        WeeklyDues: {
+          where: {
+            paidWith: null,
+          },
+        },
       },
     });
     console.log("data berhasil diambil", data);
