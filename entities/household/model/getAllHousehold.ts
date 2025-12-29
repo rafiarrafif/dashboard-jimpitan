@@ -7,9 +7,9 @@ export const getAllHousehold = async () => {
     select: {
       id: true,
       householdName: true,
-      transactions: {
-        select: {
-          paidAt: true,
+      WeeklyDues: {
+        where: {
+          paidWith: null,
         },
       },
     },
