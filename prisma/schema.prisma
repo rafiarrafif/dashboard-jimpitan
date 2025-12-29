@@ -30,8 +30,8 @@ model Household {
   firstNeighborOf  Household[]       @relation("FirstNeighbor")
   secondNeighborOf Household[]       @relation("SecondNeighbor")
   transactions     Transaction[]     @relation("householdTransactions")
-  paymentCoverages PaymentCoverage[] @relation("householdPaymentCoverage")
   collector        Collector[]       @relation("householdOfCollector")
+  WeeklyDues       WeeklyDue[]       @relation("householdWeeklyDues")
 
   @@map("households")
 }
@@ -46,37 +46,27 @@ enum HouseholdPronouns {
 
 model Transaction {
   id          String    @id @default(uuid()) @db.Uuid
-  household   Household @relation("householdTransactions", fields: [householdId], references: [id])
   householdId String    @db.Uuid
-  amount      Float     @db.DoublePrecision
-  issuer      Collector @relation("transactionCollector", fields: [issuedBy], references: [id])
-  issuedBy    String    @db.Uuid
-  paidAt      DateTime
-  note        String?   @db.Text
+  household   Household @relation("householdTransactions", fields: [householdId], references: [id])
+  issuedby    String    @db.Uuid
+  issuer      Collector @relation("transactionCollector", fields: [issuedby], references: [id])
+  amount      Int 
+  note        String?
   deletedAt   DateTime?
   createdAt   DateTime  @default(now())
   updatedAt   DateTime  @default(now()) @updatedAt
 
-  paymentCoverages PaymentCoverage[] @relation("paymentCoverageTransaction")
-
-  @@map("transactions")
+  dueCoverages WeeklyDue[] @relation("transactionWeeklyDues")
 }
 
-model PaymentCoverage {
-  id            String      @id @default(uuid()) @db.Uuid
-  transaction   Transaction @relation("paymentCoverageTransaction", fields: [transactionId], references: [id])
-  transactionId String      @db.Uuid
-  household     Household   @relation("householdPaymentCoverage", fields: [householdId], references: [id])
-  householdId   String      @db.Uuid
-  ammount       Float       @db.DoublePrecision @default(2000.00)
-  startDate     DateTime
-  endDate       DateTime
-  weekCode      String      @db.Char(10)
-  deletedAt     DateTime?
-  createdAt     DateTime    @default(now())
-  updatedAt     DateTime    @default(now()) @updatedAt
-
-  @@map("payment_coverages")
+model WeeklyDue {
+  id          String        @id @default(uuid())
+  householdId String        @db.Uuid
+  household   Household     @relation("householdWeeklyDues", fields: [householdId], references: [id])
+  paidWith    String?       @db.Uuid
+  transaction Transaction?  @relation("transactionWeeklyDues", fields: [paidWith], references: [id])
+  weekCode    String
+  amount      Int
 }
 
 model Collector {
