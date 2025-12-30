@@ -8,6 +8,18 @@ export type HouseholdSimpleList = {
   id: string;
   householdName: string;
 };
+export type WeeklyDues = {
+  id: string;
+  householdId: string;
+  paidWith: unknown;
+  weekCode: string;
+  amount: number;
+};
+export type HouseholdCheckPayment = {
+  id: string;
+  householdName: string;
+  WeeklyDues: WeeklyDues[];
+};
 export type CreateHouseholdFormData = {
   headOfHousehold: string;
   householdPronoun: HouseholdPronoun;
