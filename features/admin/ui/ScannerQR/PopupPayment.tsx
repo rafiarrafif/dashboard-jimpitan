@@ -28,13 +28,14 @@ const PopupPayment = ({
     setHouseholdData,
   ] = React.useState<HouseholdSimpleList | null>(null);
 
-  const [unpaidAmount, setUnpaidAmount] = useState<null | number>(3);
+  const [unpaidAmount, setUnpaidAmount] = useState<null | number>(0);
 
   useEffect(() => {
     if (!scannerValue) return;
     (async () => {
       const res = await getHouseholdPopupPayment(parseInt(scannerValue));
       setHouseholdData(res as HouseholdSimpleList);
+      setUnpaidAmount(res ? res.WeeklyDues.length : 0);
       console.log("res popup payment: ", res);
     })();
   }, [scannerValue]);
