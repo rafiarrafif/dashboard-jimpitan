@@ -1,9 +1,9 @@
 "use client";
 
-import { IDetectedBarcode, Scanner } from "@yudiel/react-qr-scanner";
 import React, { useState } from "react";
-import PopupPayment from "./PopupPayment";
+import { IDetectedBarcode, Scanner } from "@yudiel/react-qr-scanner";
 import { useDisclosure } from "@heroui/react";
+import PopupPayment from "./PopupPayment/Main";
 
 const MainScanner = () => {
   const [scannerValue, setScannerValue] = useState<string | null>(null);

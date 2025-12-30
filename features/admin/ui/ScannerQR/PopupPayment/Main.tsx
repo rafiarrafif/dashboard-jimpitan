@@ -1,8 +1,5 @@
 import { getHouseholdPopupPayment } from "@/entities/household/model/getHouseholdPopupPayment";
-import {
-  HouseholdCheckPayment,
-  HouseholdSimpleList,
-} from "@/entities/household/types";
+import { HouseholdCheckPayment } from "@/entities/household/types";
 import { GeistFont } from "@/providers/fonts/GeistFontProvider";
 import {
   Alert,
@@ -15,6 +12,7 @@ import {
 } from "@heroui/react";
 import { Icon } from "@iconify/react";
 import React, { useEffect, useState } from "react";
+import SelectAmount from "./SelectAmount";
 
 const PopupPayment = ({
   isOpen,
@@ -34,6 +32,7 @@ const PopupPayment = ({
 
   const [unpaidAmount, setUnpaidAmount] = useState<null | number>(0);
   const [duesAmount, setDuesAmount] = useState<null | number>(0);
+  const [nominalSelected, setNominalSelected] = useState<null | number>(0);
 
   useEffect(() => {
     if (!scannerValue) return;
@@ -44,6 +43,7 @@ const PopupPayment = ({
       setDuesAmount(
         res ? res.WeeklyDues.reduce((acc, curr) => acc + curr.amount, 0) : 0
       );
+      setNominalSelected(res && res.WeeklyDues.length > 0 ? 2000 : 0);
       console.log("res popup payment: ", res);
     })();
   }, [scannerValue]);
@@ -81,29 +81,11 @@ const PopupPayment = ({
                       base: "rounded-sm",
                     }}
                   />
-                  <div className="mt-4 flex justify-between">
-                    <div>
-                      <h1 className="text-neutral-800">Masukan nominal:</h1>
-                      <h4 className="text-sm italic text-neutral-500">
-                        Max Rp{duesAmount}
-                      </h4>
-                    </div>
-                    <div className="flex items-center gap-0 border border-neutral-800 rounded-sm h-fit overflow-hidden">
-                      <Button className="rounded-none min-w-5 min-h-5 bg-neutral-800">
-                        <Icon
-                          icon="lucide:plus"
-                          className="text-white text-xl"
-                        />
-                      </Button>
-                      <span className="px-2">2000</span>
-                      <Button className="rounded-none min-w-5 min-h-5 bg-neutral-800">
-                        <Icon
-                          icon="lucide:minus"
-                          className="text-white text-xl"
-                        />
-                      </Button>
-                    </div>
-                  </div>
+                  <SelectAmount
+                    duesAmount={duesAmount!}
+                    nominalSelected={nominalSelected}
+                    setNominalSelected={setNominalSelected}
+                  />
                 </div>
               ) : (
                 <Alert
