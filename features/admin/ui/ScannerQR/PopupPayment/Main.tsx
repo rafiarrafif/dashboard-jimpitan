@@ -19,11 +19,13 @@ const PopupPayment = ({
   onOpenChange,
   cameraStatus,
   scannerValue,
+  setScannerValue,
 }: {
   isOpen: boolean;
   onOpenChange: (isOpen: boolean) => void;
   cameraStatus: React.Dispatch<React.SetStateAction<boolean>>;
   scannerValue: string;
+  setScannerValue: React.Dispatch<React.SetStateAction<string | null>>;
 }) => {
   const [
     householdData,
@@ -99,7 +101,14 @@ const PopupPayment = ({
               )}
             </ModalBody>
             <ModalFooter>
-              <Button color="danger" variant="light" onPress={onClose}>
+              <Button
+                color="danger"
+                variant="light"
+                onPress={() => {
+                  setScannerValue(null);
+                  onClose();
+                }}
+              >
                 Batal
               </Button>
               <Button

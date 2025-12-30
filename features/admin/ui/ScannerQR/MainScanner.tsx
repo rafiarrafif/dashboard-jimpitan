@@ -29,6 +29,7 @@ const MainScanner = () => {
         onOpenChange={onOpenChange}
         cameraStatus={setCameraPaused}
         scannerValue={scannerValue!}
+        setScannerValue={setScannerValue}
       />
     </div>
   );
