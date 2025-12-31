@@ -57,7 +57,10 @@ const PopupPayment = ({
     setLoadingState(true);
     const resp = await submitPayment(householdData?.id!, nominalSelected!);
     if (!resp.success) {
+      onClose();
+      setScannerValue(null);
       setLoadingState(false);
+      cameraStatus(false);
       addToast({
         title: "Pembayaran Gagal",
         description:
@@ -65,12 +68,15 @@ const PopupPayment = ({
         color: "danger",
       });
     } else {
+      onClose();
+      setScannerValue(null);
+      setLoadingState(false);
+      cameraStatus(false);
       addToast({
         title: "Pembayaran Berhasil",
         description: resp.message,
         color: "success",
       });
-      onClose();
     }
   };
 
