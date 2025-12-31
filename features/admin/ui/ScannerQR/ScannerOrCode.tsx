@@ -1,7 +1,7 @@
 "use client";
 
 import React, { Dispatch, SetStateAction, useEffect, useState } from "react";
-import { Button, InputOtp, Link, Spinner } from "@heroui/react";
+import { Alert, Button, InputOtp, Link, Spinner } from "@heroui/react";
 import MainScanner from "./MainScanner";
 
 interface ScannerOrCodeProps {
@@ -88,6 +88,21 @@ const ScannerOrCode = ({
             length={8}
             radius="none"
           />
+          <div className="px-12">
+            <Alert
+              title="Launchpad not available"
+              description={
+                <span>
+                  This feature is not available yet.{" "}
+                  <a className="text-blue-500" href="mailto:rafi@arrafif.com">
+                    Contact developer
+                  </a>{" "}
+                  for more information.
+                </span>
+              }
+              color="warning"
+            ></Alert>
+          </div>
           <div className="w-full flex justify-center mt-2">
             <span className="text-sm text-neutral-600">
               Pakai kamera?{" "}
