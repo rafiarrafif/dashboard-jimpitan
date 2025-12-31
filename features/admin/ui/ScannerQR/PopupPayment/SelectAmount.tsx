@@ -31,7 +31,7 @@ const SelectAmount = ({
         <Button
           className="rounded-none min-w-5 min-h-5 bg-neutral-800"
           onPress={() => {
-            if (nominalSelected !== null && nominalSelected > 0)
+            if (nominalSelected !== null && nominalSelected > 2000)
               setNominalSelected(nominalSelected - 2000);
           }}
         >

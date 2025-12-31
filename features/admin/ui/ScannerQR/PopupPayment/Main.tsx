@@ -2,6 +2,7 @@ import { getHouseholdPopupPayment } from "@/entities/household/model/getHousehol
 import { HouseholdCheckPayment } from "@/entities/household/types";
 import { GeistFont } from "@/providers/fonts/GeistFontProvider";
 import {
+  addToast,
   Alert,
   Button,
   Modal,
@@ -10,9 +11,9 @@ import {
   ModalFooter,
   ModalHeader,
 } from "@heroui/react";
-import { Icon } from "@iconify/react";
 import React, { useEffect, useState } from "react";
 import SelectAmount from "./SelectAmount";
+import { submitPayment } from "@/entities/payment/model/submitPayment";
 
 const PopupPayment = ({
   isOpen,
@@ -49,6 +50,21 @@ const PopupPayment = ({
       console.log("res popup payment: ", res);
     })();
   }, [scannerValue]);
+
+  const [loadingState, setLoadingState] = useState(false);
+  const handleSubmitPayment = async () => {
+    setLoadingState(true);
+    const resp = await submitPayment(householdData?.id!, nominalSelected!);
+    if (!resp.success) {
+      setLoadingState(false);
+      addToast({
+        title: "Pembayaran Gagal",
+        description:
+          resp.error || "Terjadi kesalahan saat memproses pembayaran.",
+        color: "danger",
+      });
+    }
+  };
 
   return (
     <Modal
@@ -115,7 +131,8 @@ const PopupPayment = ({
                 isDisabled={!unpaidAmount}
                 color="primary"
                 className="text-white rounded-sm"
-                onPress={onClose}
+                onPress={handleSubmitPayment}
+                isLoading={loadingState}
               >
                 Bayar
               </Button>
