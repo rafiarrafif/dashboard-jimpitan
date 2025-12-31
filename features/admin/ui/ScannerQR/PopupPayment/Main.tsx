@@ -14,6 +14,7 @@ import {
 import React, { useEffect, useState } from "react";
 import SelectAmount from "./SelectAmount";
 import { submitPayment } from "@/entities/payment/model/submitPayment";
+import { useSession } from "next-auth/react";
 
 const PopupPayment = ({
   isOpen,
@@ -52,10 +53,15 @@ const PopupPayment = ({
     })();
   }, [scannerValue]);
 
+  const collectorSession = useSession();
   const [loadingState, setLoadingState] = useState(false);
   const handleSubmitPayment = async () => {
     setLoadingState(true);
-    const resp = await submitPayment(householdData?.id!, nominalSelected!);
+    const resp = await submitPayment({
+      householdId: householdData?.id!,
+      collectorId: collectorSession.data?.user.realId!,
+      amount: nominalSelected!,
+    });
     if (!resp.success) {
       onClose();
       setScannerValue(null);
