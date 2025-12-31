@@ -18,12 +18,14 @@ import { submitPayment } from "@/entities/payment/model/submitPayment";
 const PopupPayment = ({
   isOpen,
   onOpenChange,
+  onClose,
   cameraStatus,
   scannerValue,
   setScannerValue,
 }: {
   isOpen: boolean;
   onOpenChange: (isOpen: boolean) => void;
+  onClose: () => void;
   cameraStatus: React.Dispatch<React.SetStateAction<boolean>>;
   scannerValue: string;
   setScannerValue: React.Dispatch<React.SetStateAction<string | null>>;
@@ -47,7 +49,6 @@ const PopupPayment = ({
         res ? res.WeeklyDues.reduce((acc, curr) => acc + curr.amount, 0) : 0
       );
       setNominalSelected(res && res.WeeklyDues.length > 0 ? 2000 : 0);
-      console.log("res popup payment: ", res);
     })();
   }, [scannerValue]);
 
@@ -63,6 +64,13 @@ const PopupPayment = ({
           resp.error || "Terjadi kesalahan saat memproses pembayaran.",
         color: "danger",
       });
+    } else {
+      addToast({
+        title: "Pembayaran Berhasil",
+        description: resp.message,
+        color: "success",
+      });
+      onClose();
     }
   };
 

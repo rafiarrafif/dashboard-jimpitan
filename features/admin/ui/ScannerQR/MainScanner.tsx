@@ -8,7 +8,7 @@ import PopupPayment from "./PopupPayment/Main";
 const MainScanner = () => {
   const [scannerValue, setScannerValue] = useState<string | null>(null);
   const [cameraPaused, setCameraPaused] = useState(false);
-  const { isOpen, onOpen, onOpenChange } = useDisclosure();
+  const { isOpen, onOpen, onClose, onOpenChange } = useDisclosure();
 
   const onScanHandler = (result: IDetectedBarcode[]) => {
     setCameraPaused(true);
@@ -26,6 +26,7 @@ const MainScanner = () => {
       />
       <PopupPayment
         isOpen={isOpen}
+        onClose={onClose}
         onOpenChange={onOpenChange}
         cameraStatus={setCameraPaused}
         scannerValue={scannerValue!}

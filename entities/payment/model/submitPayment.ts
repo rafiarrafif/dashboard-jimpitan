@@ -12,8 +12,7 @@ export const submitPayment = async (
 ): Promise<SubmitPaymentResponse> => {
   console.log(`${householdId} membayarkan sebesar ${amount}`);
   return {
-    success: false,
-    message: "unknown error encountered",
-    error: "terjadi masalah",
+    success: true,
+    message: "Berhasil membayar",
   };
 };
