@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react";
 import TitleCreateHousehold from "../ui/CreateHousehold/Title";
 import FormCreateHousehold from "../ui/CreateHousehold/FormCard";
 import { HouseholdSimpleList } from "@/entities/household/types";
-import { getAllHousehold } from "@/entities/household/model/getAllHousehold";
+import { getAllHousehold } from "@/entities/household/model/getAllHouseholdWithDues";
 import LoadingScreen from "@/shared/ui/LoadingScreen";
 
 const CreateHousehold = () => {

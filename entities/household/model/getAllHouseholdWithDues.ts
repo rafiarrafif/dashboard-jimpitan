@@ -2,7 +2,7 @@
 
 import { prisma } from "@/shared/libs/database/prisma/connector";
 
-export const getAllHousehold = async () => {
+export const getAllHouseholdWithDues = async () => {
   const allHouseholdData = await prisma.household.findMany({
     select: {
       id: true,

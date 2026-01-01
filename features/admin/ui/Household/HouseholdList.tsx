@@ -1,13 +1,13 @@
 "use client";
-import { HouseholdSimpleList } from "@/entities/household/types";
-import { Card, CardBody, CardHeader, Chip } from "@heroui/react";
+import { HouseholdCheckPayment } from "@/entities/household/types";
+import { Card, CardHeader, Chip } from "@heroui/react";
 import { useHeaderSearchListStore } from "../../store/HeaderSearchList.store";
 import React from "react";
 
 const HouseholdList = ({
   householdList,
 }: {
-  householdList: HouseholdSimpleList[];
+  householdList: HouseholdCheckPayment[];
 }) => {
   const householdSearchQuery = useHeaderSearchListStore(
     (query) => query.searchHousehold
@@ -28,15 +28,27 @@ const HouseholdList = ({
                   char.toUpperCase()
                 )}
               </span>
-              <Chip
-                color="success"
-                variant="flat"
-                classNames={{
-                  base: "rounded-sm",
-                }}
-              >
-                <span>Lunas</span>
-              </Chip>
+              {household.WeeklyDues.length === 0 ? (
+                <Chip
+                  color="success"
+                  variant="flat"
+                  classNames={{
+                    base: "rounded-sm",
+                  }}
+                >
+                  <span>Lunas</span>
+                </Chip>
+              ) : (
+                <Chip
+                  color="danger"
+                  variant="flat"
+                  classNames={{
+                    base: "rounded-sm",
+                  }}
+                >
+                  <span>Nunggak {household.WeeklyDues.length}</span>
+                </Chip>
+              )}
             </CardHeader>
           </Card>
         ))}

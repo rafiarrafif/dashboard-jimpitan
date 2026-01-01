@@ -1,20 +1,20 @@
 "use client";
 import React, { useEffect, useState } from "react";
-import { HouseholdSimpleList } from "@/entities/household/types";
+import { HouseholdCheckPayment } from "@/entities/household/types";
 import SearchHeader from "../ui/Household/SearchHeader";
 import CreateButton from "../ui/Household/CreateButton";
 import HouseholdList from "../ui/Household/HouseholdList";
 import LoadingScreen from "@/shared/ui/LoadingScreen";
-import { getAllHousehold } from "@/entities/household/model/getAllHousehold";
+import { getAllHouseholdWithDues } from "@/entities/household/model/getAllHouseholdWithDues";
 
 const Household = () => {
   const [householdList, setHouseholdList] = useState<
-    HouseholdSimpleList[] | null
+    HouseholdCheckPayment[] | null
   >(null);
 
   useEffect(() => {
     (async () => {
-      const callback = await getAllHousehold();
+      const callback = await getAllHouseholdWithDues();
       setHouseholdList(callback);
     })();
   }, []);
