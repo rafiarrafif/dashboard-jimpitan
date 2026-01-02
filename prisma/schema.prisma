@@ -55,6 +55,7 @@ model Transaction {
   paidAt      DateTime  @default(now())
 
   dueCoverages WeeklyDue[] @relation("transactionWeeklyDues")
+  @@index([issuedby, paidAt])
 }
 
 model WeeklyDue {
