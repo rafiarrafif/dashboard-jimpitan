@@ -52,9 +52,7 @@ model Transaction {
   issuer      Collector @relation("transactionCollector", fields: [issuedby], references: [id])
   amount      Int 
   note        String?
-  deletedAt   DateTime?
-  createdAt   DateTime  @default(now())
-  updatedAt   DateTime  @default(now()) @updatedAt
+  paidAt      DateTime  @default(now())
 
   dueCoverages WeeklyDue[] @relation("transactionWeeklyDues")
 }
