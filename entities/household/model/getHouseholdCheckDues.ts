@@ -1,7 +1,7 @@
 "use server";
 import { prisma } from "@/shared/libs/database/prisma/connector";
 
-export const getHouseholdDetailPayment = async (id: string) => {
+export const getHouseholdCheckDues = async (id: string) => {
   try {
     return await prisma.household.findUnique({
       where: {
@@ -10,6 +10,16 @@ export const getHouseholdDetailPayment = async (id: string) => {
       select: {
         id: true,
         householdName: true,
+        transactions: true,
+        _count: {
+          select: {
+            WeeklyDues: {
+              where: {
+                paidWith: null,
+              },
+            },
+          },
+        },
       },
     });
   } catch (error) {

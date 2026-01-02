@@ -1,3 +1,5 @@
+import { Transaction } from "@/generated/prisma/client";
+
 export interface HouseholdList {
   id: string;
   headOfHousehold: string;
@@ -14,6 +16,14 @@ export type WeeklyDues = {
   paidWith: unknown;
   weekCode: string;
   amount: number;
+};
+export type HouseholdCheckDues = {
+  id: string;
+  householdName: string;
+  transactions: Transaction[];
+  _count: {
+    WeeklyDues: number;
+  };
 };
 export type HouseholdCheckPayment = {
   id: string;
