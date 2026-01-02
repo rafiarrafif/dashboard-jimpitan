@@ -1,13 +1,13 @@
 "use client";
-import { getHouseholdCheckDues } from "@/entities/household/model/getHouseholdCheckDues";
+import {
+  getHouseholdCheckDues,
+  HouseholdCheckDues,
+} from "@/entities/household/model/getHouseholdCheckDues";
 import LoadingScreen from "@/shared/ui/LoadingScreen";
 import React, { useEffect, useState } from "react";
 import HeaderPage from "../ui/viewDetails/HeaderPage";
-import {
-  HouseholdCheckDues,
-  HouseholdCheckPayment,
-} from "@/entities/household/types";
 import StatusPaymentThisWeek from "../ui/viewDetails/StatusPaymentThisWeek";
+import TransactionHistory from "../ui/viewDetails/TransactionHistory";
 
 const ViewDetail = ({ householdId }: { householdId: string }) => {
   const [householdData, setHouseholdData] = useState<HouseholdCheckDues | null>(
@@ -16,9 +16,7 @@ const ViewDetail = ({ householdId }: { householdId: string }) => {
 
   useEffect(() => {
     (async () => {
-      const callback = (await getHouseholdCheckDues(
-        householdId
-      )) as HouseholdCheckDues;
+      const callback = await getHouseholdCheckDues(householdId);
       setHouseholdData(callback);
       console.log("household detail payment: ", callback);
     })();
@@ -30,6 +28,7 @@ const ViewDetail = ({ householdId }: { householdId: string }) => {
         <main className="mx-6 pt-8">
           <HeaderPage householdName={householdData.householdName} />
           <StatusPaymentThisWeek unpaidDues={householdData._count.WeeklyDues} />
+          <TransactionHistory transactions={householdData.transactions} />
         </main>
       ) : (
         <LoadingScreen />
