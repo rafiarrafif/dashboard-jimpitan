@@ -2,7 +2,7 @@
 import React from "react";
 import Greetings from "../ui/dashboard/Greetings";
 import HeaderDashboard from "../ui/dashboard/Header";
-import Leaderboard from "../ui/dashboard/Leaderboard";
+import Statistics from "../ui/dashboard/Statistics";
 
 const Dashboard = () => {
   return (
@@ -11,7 +11,7 @@ const Dashboard = () => {
       <div className="mx-4">
         <Greetings />
         <div className="mt-6">
-          <Leaderboard />
+          <Statistics />
         </div>
       </div>
     </div>
