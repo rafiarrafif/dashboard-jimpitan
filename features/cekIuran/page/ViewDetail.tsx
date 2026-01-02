@@ -4,6 +4,7 @@ import LoadingScreen from "@/shared/ui/LoadingScreen";
 import React, { useEffect, useState } from "react";
 import HeaderPage from "../ui/viewDetails/HeaderPage";
 import { HouseholdSimpleList } from "@/entities/household/types";
+import StatusPaymentThisWeek from "../ui/viewDetails/StatusPaymentThisWeek";
 
 const ViewDetail = ({ householdId }: { householdId: string }) => {
   const [
@@ -23,8 +24,9 @@ const ViewDetail = ({ householdId }: { householdId: string }) => {
   return (
     <div>
       {householdData ? (
-        <main className="mx-4 pt-8">
+        <main className="mx-6 pt-8">
           <HeaderPage householdName={householdData.householdName} />
+          <StatusPaymentThisWeek />
         </main>
       ) : (
         <LoadingScreen />
