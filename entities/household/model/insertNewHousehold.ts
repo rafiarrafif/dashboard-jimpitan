@@ -1,8 +1,8 @@
 "use server";
 import { prisma } from "@/shared/libs/database/prisma/connector";
 import { CreateHouseholdFormData } from "../types";
-import { HouseholdPronouns } from "@/app/generated/prisma/enums";
-import { Household } from "@/app/generated/prisma/client";
+import { HouseholdPronouns } from "@/generated/prisma/enums";
+import { Household } from "@/generated/prisma/client";
 
 interface InsertNewHousehold {
   success: boolean;

@@ -70,7 +70,8 @@ const PopupPayment = ({
       addToast({
         title: "Pembayaran Gagal",
         description:
-          resp.error || "Terjadi kesalahan saat memproses pembayaran.",
+          (resp.error as string) ||
+          "Terjadi kesalahan saat memproses pembayaran.",
         color: "danger",
       });
     } else {

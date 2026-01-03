@@ -1,11 +1,12 @@
 import ShowQRHousehold from "@/features/admin/page/ShowQRHousehold";
-import React from "react";
+import LoadingScreen from "@/shared/ui/LoadingScreen";
+import React, { Suspense } from "react";
 
 const page = () => {
   return (
-    <div>
+    <Suspense fallback={<LoadingScreen />}>
       <ShowQRHousehold />
-    </div>
+    </Suspense>
   );
 };
 
