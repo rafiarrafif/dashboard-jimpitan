@@ -3,9 +3,9 @@
 import { HouseholdMetaQR } from "@/entities/household/model/getHouseholdMetaQR";
 import { Button } from "@heroui/react";
 import React, { useRef } from "react";
-import generatePDF from "react-to-pdf";
 import QRCode from "react-qr-code";
-import html2canvas from "html2canvas-pro";
+import { toPng } from "html-to-image";
+import jsPDF from "jspdf";
 
 const HouseholdQRCanvas = ({
   householdData,
@@ -14,32 +14,50 @@ const HouseholdQRCanvas = ({
 }) => {
   const canvasTarget = useRef<HTMLDivElement>(null);
 
-  const downloadAsPDF = () => {
-    generatePDF(canvasTarget, {
-      filename: `qr-${householdData.householdName
-        .trim()
-        .toLowerCase()
-        .split(" ")
-        .join("-")}.pdf`,
-    });
+  const downloadAsPDF = async () => {
+    if (!canvasTarget.current) return;
+
+    try {
+      const dataUrl = await toPng(canvasTarget.current, {
+        cacheBust: true,
+        pixelRatio: 2,
+        backgroundColor: "#ffffff",
+      });
+
+      const img = new Image();
+      img.src = dataUrl;
+
+      img.onload = () => {
+        const pdf = new jsPDF({
+          orientation: "portrait",
+          unit: "px",
+          format: [img.width, img.height],
+        });
+
+        pdf.addImage(img, "PNG", 0, 0, img.width, img.height);
+        pdf.save("qr-code.pdf");
+      };
+    } catch (err) {
+      console.error("PDF download failed:", err);
+    }
   };
 
-  const downloadAsJPG = async () => {
-    const element = canvasTarget.current;
-    const canvas = await html2canvas(element!);
+  const downloadAsPNG = async () => {
+    if (!canvasTarget.current) return;
 
-    const data = canvas.toDataURL("image/png");
-    const link = document.createElement("a");
+    try {
+      const dataUrl = await toPng(canvasTarget.current, {
+        cacheBust: true,
+        pixelRatio: 2,
+        backgroundColor: "#ffffff",
+      });
 
-    if (typeof link.download === "string") {
-      link.href = data;
-      link.download = "image.png";
-
-      document.body.appendChild(link);
+      const link = document.createElement("a");
+      link.download = "qr-code.png";
+      link.href = dataUrl;
       link.click();
-      document.body.removeChild(link);
-    } else {
-      window.open(data);
+    } catch (err) {
+      console.error("PNG download failed:", err);
     }
   };
 
@@ -89,7 +107,7 @@ const HouseholdQRCanvas = ({
           radius="none"
           color="primary"
           href="cek-iuran"
-          onPress={() => downloadAsJPG()}
+          onPress={() => downloadAsPNG()}
         >
           Unduh sebagai PNG
         </Button>
