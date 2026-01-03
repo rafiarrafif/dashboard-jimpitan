@@ -1,7 +1,7 @@
 import { PrismaAdapter } from "@auth/prisma-adapter";
 import { prisma } from "./shared/libs/database/prisma/connector";
 import NextAuth, { DefaultSession } from "next-auth";
-import Google from "next-auth/providers/google";
+import authConfig from "./auth.config";
 
 declare module "next-auth" {
   interface Session {
@@ -14,7 +14,6 @@ declare module "next-auth" {
 
 export const { handlers, signIn, signOut, auth } = NextAuth({
   adapter: PrismaAdapter(prisma),
-  providers: [Google],
   session: {
     strategy: "jwt",
   },
@@ -40,4 +39,5 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
       return session;
     },
   },
+  ...authConfig,
 });

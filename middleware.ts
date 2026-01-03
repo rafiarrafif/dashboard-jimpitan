@@ -1,34 +1,27 @@
-import { NextRequest, NextResponse } from "next/server";
-import { getToken } from "next-auth/jwt";
+// Use only one of the two middleware options below
+// 1. Use middleware directly
+// export const { auth: middleware } = NextAuth(authConfig)
 
-export async function middleware(req: NextRequest) {
+import NextAuth from "next-auth";
+import authConfig from "./auth.config";
+import { NextResponse } from "next/server";
+
+// 2. Wrapped middleware option
+const { auth } = NextAuth(authConfig);
+export default auth(async function middleware(req) {
+  // Your custom middleware logic goes here
   const { pathname } = req.nextUrl;
-  const token = await getToken({ req, secret: process.env.AUTH_SECRET });
-
   const loginUrl = new URL("/auth/login", req.url);
   const adminUrl = new URL("/admin", req.url);
-  const blockedUrl = new URL("/auth/blocked", req.url);
 
-  // Route to admin page (only authorized account)
-  if (pathname.startsWith("/admin")) {
-    const token = await getToken({ req, secret: process.env.AUTH_SECRET });
-    if (!token) return NextResponse.redirect(loginUrl);
-    if (!token.realId) return NextResponse.redirect(blockedUrl);
-    return NextResponse.next();
-  }
+  if (!req.auth && pathname.startsWith("/admin"))
+    return NextResponse.redirect(loginUrl);
 
-  // Route to account blocked page (only login user without realId)
-  if (pathname.startsWith("/auth/blocked")) {
-    if (!token) return NextResponse.redirect(loginUrl);
-    if (token?.realId) return NextResponse.redirect(adminUrl);
-    return NextResponse.next();
-  }
+  if (!req.auth && pathname.startsWith("/auth/blocked"))
+    return NextResponse.redirect(loginUrl);
 
-  // Route to auth login page (only unauthenticated user)
-  if (pathname.startsWith("/auth/login")) {
-    if (token) return NextResponse.redirect(adminUrl);
-    NextResponse.next();
-  }
+  if (req.auth && pathname.startsWith("/auth/login"))
+    return NextResponse.redirect(adminUrl);
 
   return NextResponse.next();
-}
+});
