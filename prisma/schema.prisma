@@ -68,6 +68,8 @@ model WeeklyDue {
   startDate   DateTime      @db.Date
   endDate     DateTime      @db.Date
   amount      Int
+  
+  @@unique([householdId, weekCode])
 }
 
 model Collector {
