@@ -21,9 +21,6 @@ jobs:
               with:
                   bun-version: latest
             
-            - name: Generate prisma client
-              run: bunx prisma generate
-            
             - name: Install dependencies
               run: bun install
 
