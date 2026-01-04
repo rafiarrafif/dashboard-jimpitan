@@ -1,7 +1,7 @@
 "use client";
 
-import React, { Dispatch, SetStateAction, useEffect, useState } from "react";
-import { Alert, Button, InputOtp, Link, Spinner } from "@heroui/react";
+import React, { Dispatch, SetStateAction, useState } from "react";
+import { Alert, Button, InputOtp, Link } from "@heroui/react";
 import MainScanner from "./MainScanner";
 
 interface ScannerOrCodeProps {
@@ -14,39 +14,54 @@ const ScannerOrCode = ({
   setUseCameraMethod,
 }: ScannerOrCodeProps) => {
   const [hasCameraPermission, setHasCameraPermission] = useState(false);
-  const [loadingText, setLoadingText] = useState("Menghubungkan ke kamera");
+  const [isCameraBlocked, setIsCameraBlocked] = useState(false);
+  const [isButtonLoading, setIsButtonLoading] = useState(false);
 
-  const getPermission = () => {
-    navigator.mediaDevices
-      .getUserMedia({ video: true })
-      .then(() => {
-        setHasCameraPermission(true);
-        window.location.reload();
-      })
-      .catch(() => {
-        setHasCameraPermission(false);
-        setLoadingText("Kamera tidak dapat terhubung");
-      });
+  const requestCameraPermission = async () => {
+    setIsButtonLoading(true);
+    try {
+      const stream = await navigator.mediaDevices.getUserMedia({ video: true });
+      stream.getTracks().forEach((track) => track.stop());
+      setHasCameraPermission(true);
+    } catch (error) {
+      setHasCameraPermission(false);
+      setIsCameraBlocked(true);
+    }
   };
-
-  useEffect(() => {
-    navigator.mediaDevices.enumerateDevices().then((devices) => {
-      const videoInputs = devices.filter((d) => d.kind === "videoinput");
-      videoInputs[0].deviceId ? setHasCameraPermission(true) : getPermission();
-    });
-  }, []);
 
   return (
     <div>
       {useCameraMethod ? (
         <div>
           <div className="mx-8 rounded-sm overflow-hidden shadow-lg border border-neutral-300">
-            {hasCameraPermission ? (
-              <MainScanner />
+            {isCameraBlocked ? (
+              <div className="h-48 bg-neutral-50 px-4 flex flex-col items-center justify-center gap-4 ">
+                <h1 className="font-medium text-lg">Tidak mendapatkan akses</h1>
+                <p className="text-sm text-center text-neutral-700">
+                  Hal ini dapat terjadi jika permintaan akses kamera sebelumnya
+                  ditolak. Silahkan reset perizinan situs ini pada setelan
+                  browser.
+                </p>
+              </div>
             ) : (
-              <div className="h-48 bg-neutral-50 px-2 flex flex-col items-center justify-center gap-4 ">
-                <Spinner />
-                <span>{loadingText}</span>
+              <div>
+                {hasCameraPermission ? (
+                  <MainScanner />
+                ) : (
+                  <div className="h-48 bg-neutral-50 px-2 flex flex-col items-center justify-center gap-4 ">
+                    <Button
+                      onPress={requestCameraPermission}
+                      className="w-fit rounded-sm text-white text-md h-12"
+                      color="primary"
+                      isLoading={isButtonLoading}
+                    >
+                      Buka kamera
+                    </Button>
+                    <span className="text-sm text-center text-neutral-700">
+                      Tekan tombol diatas untuk membuka scanner
+                    </span>
+                  </div>
+                )}
               </div>
             )}
           </div>
