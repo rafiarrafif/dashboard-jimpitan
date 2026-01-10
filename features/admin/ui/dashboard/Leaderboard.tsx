@@ -1,4 +1,6 @@
+import { getLeaderboardData } from "@/entities/collector/model/getLeaderboardData";
 import {
+  addToast,
   Card,
   CardBody,
   CardHeader,
@@ -13,45 +15,25 @@ import {
 import { useAsyncList } from "@react-stately/data";
 import React from "react";
 
-const collectors = [
-  {
-    id: "1",
-    name: "Rafi",
-    monthly_count: 150,
-    total_count: 1210,
-  },
-  {
-    id: "2",
-    name: "Budi",
-    monthly_count: 120,
-    total_count: 1100,
-  },
-  {
-    id: "3",
-    name: "Siti",
-    monthly_count: 100,
-    total_count: 950,
-  },
-  {
-    id: "4",
-    name: "Muh. Aziz",
-    monthly_count: 90,
-    total_count: 900,
-  },
-  {
-    id: "5",
-    name: "Dewi",
-    monthly_count: 80,
-    total_count: 850,
-  },
-];
-
 const Leaderboard = () => {
-  let list = useAsyncList<typeof collectors[number]>({
+  let list = useAsyncList<{
+    id: string;
+    name: string;
+    monthly_count: number;
+    total_count: number;
+  }>({
     async load({ signal }) {
+      const response = await getLeaderboardData();
+      const dataCollectors = response.data;
+      if (!response.success)
+        addToast({
+          title: "Connection Error",
+          description: "Failed to load leaderboard data.",
+          color: "danger",
+        });
       console.log("Loading leaderboard data...", signal);
       return {
-        items: collectors,
+        items: dataCollectors || [],
       };
     },
     async sort({ items, sortDescriptor }) {
