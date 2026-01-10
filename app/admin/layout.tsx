@@ -12,7 +12,7 @@ const layout = async ({
     <div>
       {children}
       <div className="h-32 w-full" />
-      <div className="fixed bottom-0">
+      <div className="fixed z-10 bottom-0">
         <BottomNavbar />
       </div>
     </div>
