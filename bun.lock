@@ -12,6 +12,7 @@
         "@prisma/adapter-pg": "^7.2.0",
         "@prisma/client": "^7.2.0",
         "@prisma/extension-accelerate": "^3.0.1",
+        "@react-stately/data": "^3.15.0",
         "@tailwindcss/postcss": "^4.1.11",
         "@types/better-sqlite3": "^7.6.13",
         "@types/pg": "^8.16.0",
@@ -515,6 +516,8 @@
     "@react-stately/collections": ["@react-stately/collections@3.12.8", "", { "dependencies": { "@react-types/shared": "^3.32.1", "@swc/helpers": "^0.5.0" }, "peerDependencies": { "react": "^16.8.0 || ^17.0.0-rc.1 || ^18.0.0 || ^19.0.0-rc.1" } }, "sha512-AceJYLLXt1Y2XIcOPi6LEJSs4G/ubeYW3LqOCQbhfIgMaNqKfQMIfagDnPeJX9FVmPFSlgoCBxb1pTJW2vjCAQ=="],
 
     "@react-stately/combobox": ["@react-stately/combobox@3.12.1", "", { "dependencies": { "@react-stately/collections": "^3.12.8", "@react-stately/form": "^3.2.2", "@react-stately/list": "^3.13.2", "@react-stately/overlays": "^3.6.21", "@react-stately/utils": "^3.11.0", "@react-types/combobox": "^3.13.10", "@react-types/shared": "^3.32.1", "@swc/helpers": "^0.5.0" }, "peerDependencies": { "react": "^16.8.0 || ^17.0.0-rc.1 || ^18.0.0 || ^19.0.0-rc.1" } }, "sha512-RwfTTYgKJ9raIY+7grZ5DbfVRSO5pDjo/ur2VN/28LZzM0eOQrLFQ00vpBmY7/R64sHRpcXLDxpz5cqpKCdvTw=="],
+
+    "@react-stately/data": ["@react-stately/data@3.15.0", "", { "dependencies": { "@react-types/shared": "^3.32.1", "@swc/helpers": "^0.5.0" }, "peerDependencies": { "react": "^16.8.0 || ^17.0.0-rc.1 || ^18.0.0 || ^19.0.0-rc.1" } }, "sha512-ocP39NQQkrbtHVCPsqltNncpEHaONyYX/8s2UK9xeLRc+55NtDI2RZDKTUf/mi6H2SHxzEwLMQH8hWtEwC55mQ=="],
 
     "@react-stately/datepicker": ["@react-stately/datepicker@3.15.3", "", { "dependencies": { "@internationalized/date": "^3.10.1", "@internationalized/string": "^3.2.7", "@react-stately/form": "^3.2.2", "@react-stately/overlays": "^3.6.21", "@react-stately/utils": "^3.11.0", "@react-types/datepicker": "^3.13.3", "@react-types/shared": "^3.32.1", "@swc/helpers": "^0.5.0" }, "peerDependencies": { "react": "^16.8.0 || ^17.0.0-rc.1 || ^18.0.0 || ^19.0.0-rc.1" } }, "sha512-RDYoz1R/EkCyxHYewb58T7DngU3gl6CnQL7xiWiDlayPnstGaanoQ3yCZGJaIQwR8PrKdNbQwXF9NlSmj8iCOw=="],
 
