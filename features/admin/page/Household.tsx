@@ -20,7 +20,7 @@ const Household = () => {
   }, []);
 
   return (
-    <div className="h-screen">
+    <div className="h-fit pb-12">
       {householdList ? (
         <div>
           <SearchHeader />
@@ -29,7 +29,7 @@ const Household = () => {
       ) : (
         <LoadingScreen />
       )}
-      <div className="fixed bottom-[12vh] right-[4vw]">
+      <div className="fixed z-20 bottom-[12vh] right-[4vw]">
         <CreateButton />
       </div>
     </div>
