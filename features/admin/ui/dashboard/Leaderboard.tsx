@@ -31,7 +31,6 @@ const Leaderboard = () => {
           description: "Failed to load leaderboard data.",
           color: "danger",
         });
-      console.log("Loading leaderboard data...", signal);
       return {
         items: dataCollectors || [],
       };
