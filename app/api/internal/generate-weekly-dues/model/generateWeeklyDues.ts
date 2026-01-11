@@ -4,7 +4,7 @@ export const generateWeeklyDues = async () => {
   console.log("✍️ Start generating dues invoice");
 
   const now = new Date();
-  let day = now.getDay();
+  const day = now.getDay();
 
   const startDate = new Date(now);
   startDate.setDate(now.getDate() - day);
