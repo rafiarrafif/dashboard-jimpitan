@@ -1,17 +1,16 @@
 import { prisma } from "@/shared/libs/database/prisma/connector";
-import {
-  startOfISOWeek,
-  endOfISOWeek,
-  getISOWeekYear,
-  getISOWeek,
-} from "date-fns";
+import { getISOWeekYear, getISOWeek } from "date-fns";
 export const generateWeeklyDues = async () => {
   console.log("✍️ Start generating dues invoice");
 
   const now = new Date();
+  let day = now.getDay();
 
-  const startDate = startOfISOWeek(now);
-  const endDate = endOfISOWeek(now);
+  const startDate = new Date(now);
+  startDate.setDate(now.getDate() - day);
+
+  const endDate = new Date(startDate);
+  endDate.setDate(startDate.getDate() + 6);
 
   const year = getISOWeekYear(now);
   const week = getISOWeek(now);
