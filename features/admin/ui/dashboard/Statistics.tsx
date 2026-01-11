@@ -12,6 +12,7 @@ const Statistics = () => {
   });
 
   useEffect(() => {
+    if (!session) return;
     (async () => {
       const response = await getScanStatistics(session?.user.realId as string);
       response
@@ -22,7 +23,7 @@ const Statistics = () => {
             description: "Koneksi ke server terputus.",
           });
     })();
-  }, []);
+  }, [session]);
 
   return (
     <Card classNames={{ base: "rounded-sm" }}>

@@ -18,7 +18,6 @@ const ViewDetail = ({ householdId }: { householdId: string }) => {
     (async () => {
       const callback = await getHouseholdCheckDues(householdId);
       setHouseholdData(callback);
-      console.log("household detail payment: ", callback);
     })();
   }, []);
 
