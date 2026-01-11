@@ -65,8 +65,8 @@ model WeeklyDue {
   paidWith    String?       @db.Uuid
   transaction Transaction?  @relation("transactionWeeklyDues", fields: [paidWith], references: [id])
   weekCode    String
-  startDate   DateTime      @db.Date
-  endDate     DateTime      @db.Date
+  startDate   DateTime     
+  endDate     DateTime
   amount      Int
   
   @@unique([householdId, weekCode])
