@@ -52,6 +52,9 @@ export const getHouseholdCheckDues = async (id: string) => {
             amount: true,
             paidAt: true,
             dueCoverages: {
+              orderBy: {
+                startDate: "asc",
+              },
               select: {
                 startDate: true,
                 endDate: true,
